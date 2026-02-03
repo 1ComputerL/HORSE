@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 11: Wild Horses & Conservation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .container { background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); max-width: 700px; margin-top: 80px; width: 100%; overflow: hidden; }
+        .header { background: linear-gradient(135deg, #f08e80 0%, #f4aba1 100%); color: white; padding: 40px 20px; text-align: center; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.95; }
+        .content { padding: 40px; }
+        .start-screen { text-align: center; }
+        .start-screen h2 { color: #333; margin-bottom: 20px; font-size: 1.8em; }
+        .start-screen p { color: #666; margin-bottom: 30px; font-size: 1.1em; line-height: 1.6; }
+        .start-image { width: 100%; max-width: 400px; height: 300px; object-fit: cover; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); }
+        .btn { background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%); color: white; padding: 15px 40px; border: none; border-radius: 50px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; margin-top: 20px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(11, 13, 99, 0.4); }
+        .quiz-screen { display: none; }
+        .progress-bar { background: #e0e0e0; height: 8px; border-radius: 4px; margin-bottom: 30px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, #f08e80 0%, #f4aba1 100%); height: 100%; transition: width 0.3s ease; }
+        .question-number { color: #0b0d63; font-weight: bold; margin-bottom: 10px; }
+        .question-text { font-size: 1.5em; color: #333; margin-bottom: 25px; font-weight: 600; }
+        .options { display: flex; flex-direction: column; gap: 12px; }
+        .option { padding: 15px 20px; border: 2px solid #e0e0e0; border-radius: 10px; cursor: pointer; font-size: 1em; transition: all 0.3s ease; background: white; text-align: left; }
+        .option:hover { border-color: #f08e80; background: #fff5f2; transform: translateX(5px); }
+        .option.correct { border-color: #4caf50; background: #4caf50; color: white; }
+        .option.incorrect { border-color: #f44336; background: #f44336; color: white; }
+        .feedback { margin-top: 20px; padding: 15px; border-radius: 10px; font-weight: 600; display: none; }
+        .feedback.show { display: block; }
+        .feedback.correct { background: #c8e6c9; color: #2e7d32; border-left: 5px solid #4caf50; }
+        .feedback.incorrect { background: #ffcdd2; color: #c62828; border-left: 5px solid #f44336; }
+        .next-btn { margin-top: 25px; display: none; }
+        .next-btn.show { display: block; }
+        .results-screen { display: none; text-align: center; }
+        .score-display { font-size: 4em; color: #0b0d63; margin: 30px 0; font-weight: bold; }
+        .results-image { width: 100%; max-width: 350px; height: 250px; object-fit: cover; border-radius: 15px; margin: 30px 0; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); }
+        .results-message { font-size: 1.3em; color: #333; margin-bottom: 10px; font-weight: 600; }
+        .results-description { color: #666; margin-bottom: 30px; font-size: 1em; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav style="position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%); padding: 1rem 0; z-index: 2000; box-shadow: 0 2px 10px rgba(11, 13, 99, 0.3);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" style="font-size: 24px; font-weight: bold; color: #fdf0e6; text-decoration: none; letter-spacing: 2px;">H.O.R.S.E</a>
+            <ul style="display: flex; list-style: none; gap: 30px; align-items: center;">
+                <li><a href="index.html" style="color: #fdf0e6; text-decoration: none; font-weight: 500; transition: color 0.3s ease; border-bottom: 2px solid transparent;">Home</a></li>
+                <li><a href="quizzes.html" style="color: #fdf0e6; text-decoration: none; font-weight: 500; transition: color 0.3s ease; border-bottom: 2px solid transparent; padding-bottom: 5px; border-bottom-color: #f08e80;">Quizzes</a></li>
+                <li><a href="information.html" style="color: #fdf0e6; text-decoration: none; font-weight: 500; transition: color 0.3s ease; border-bottom: 2px solid transparent;">Information</a></li>
+                <li><a href="progress.html" style="color: #fdf0e6; text-decoration: none; font-weight: 500; transition: color 0.3s ease; border-bottom: 2px solid transparent;">Progress</a></li>
+                <li><a href="about.html" style="color: #fdf0e6; text-decoration: none; font-weight: 500; transition: color 0.3s ease; border-bottom: 2px solid transparent;">About</a></li>
+            </ul>
+            <div id="auth-status" style="display: flex; align-items: center; gap: 15px;"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>Wild Horses & Conservation</h1>
+            <p>Test Your Knowledge!</p>
+        </div>
+        <div class="content">
+            <div class="start-screen" id="startScreen">
+                <h2>Welcome to Quiz 11: Wild Horses & Conservation</h2>
+                <p>Discover wild horse populations, conservation efforts, and endangered breeds worldwide.</p>
+                <img src="https://images.unsplash.com/photo-1577881287570-ec286b4ccc75?w=500&h=300&fit=crop" alt="Beautiful horse" class="start-image">
+                <button class="btn" onclick="startQuiz()">Start the Quiz</button>
+            </div>
+            <div class="quiz-screen" id="quizScreen">
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <div class="question-number" id="questionNumber"></div>
+                <div class="question-text" id="questionText"></div>
+                <div class="options" id="optionsContainer"></div>
+                <div class="feedback" id="feedback"></div>
+                <button class="btn next-btn" id="nextBtn" onclick="nextQuestion()">Next Question</button>
+            </div>
+            <div class="results-screen" id="resultsScreen">
+                <h2>Quiz Complete</h2>
+                <div class="score-display" id="scoreDisplay"></div>
+                <img id="resultsImage" class="results-image" alt="Results celebration">
+                <div class="results-message" id="resultsMessage"></div>
+                <div class="results-description" id="resultsDescription"></div>
+                <button class="btn" onclick="location.reload()">Take Quiz Again</button>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center; padding: 20px; color: white;">
+        <a href="quizzes.html" style="color: #f08e80; text-decoration: none; font-weight: bold;">Back to All Quizzes</a>
+    </div>
+    <script src="account-utils.js"></script>
+    <script src="progress-tracker.js"></script>
+    <script>
+        const quizData = [
+            { question: "Where are the largest populations of wild mustangs found?", options: ["Canada", "Western United States", "South America", "Australia"], correct: 1, fact: "The largest populations of wild mustangs are found in the western United States, managed by the Bureau of Land Management (BLM)." },
+            { question: "What is the Przewalski's horse?", options: ["An Asian wild horse breed", "An extinct species", "A recently rediscovered wild horse", "A domesticated breed"], correct: 0, fact: "Przewalski's horses are an endangered wild horse species native to Mongolia. They were nearly extinct but are being successfully reintroduced." },
+            { question: "How many wild horses roam North America?", options: ["Fewer than 1,000", "10,000-50,000", "Over 50,000", "Over 100,000"], correct: 1, fact: "It's estimated that 10,000-50,000 wild horses roam the western United States, though exact numbers vary by source." },
+            { question: "What is a major conservation concern for wild horses?", options: ["Too many predators", "Overpopulation and habitat competition", "Too much human interaction", "Not enough mating"], correct: 1, fact: "Overpopulation of wild horses is a major concern, causing overgrazing and habitat degradation in sensitive ecosystems." },
+            { question: "Which horse breed is considered critically endangered?", options: ["Quarter Horse", "Mustang", "Akhal-Teke", "Thoroughbred"], correct: 2, fact: "The Akhal-Teke breed from Turkmenistan is considered critically endangered with fewer than 3,600 horses remaining worldwide." },
+            { question: "What do wild horses primarily eat in their natural habitat?", options: ["Cultivated crops", "Native grasses and shrubs", "Trees and bark only", "Hay and grain"], correct: 1, fact: "Wild horses are grazers and browse on native grasses, shrubs, and other vegetation in their natural habitats." },
+            { question: "How fast can wild mustangs run?", options: ["30 mph", "50 mph", "55+ mph", "70 mph"], correct: 2, fact: "Wild mustangs can run at speeds of 55+ mph when evading predators or traveling across open terrain." },
+            { question: "What is the Chincoteague pony?", options: ["An Asian wild horse", "A wild pony population on an island off Virginia", "A domestic breed", "An extinct species"], correct: 1, fact: "Chincoteague ponies are wild ponies found on islands off the coast of Virginia and Maryland, now a popular cultural icon." },
+            { question: "How do wild horses survive harsh winters?", options: ["They migrate south", "They grow thick coats and lower body temperature", "They hibernate", "They don't survive well in winter"], correct: 1, fact: "Wild horses adapt to harsh winters by growing thick coats and slowing their metabolism to conserve energy." },
+            { question: "What international treaty protects endangered horse species?", options: ["Convention on International Trade", "CITES (Convention on International Trade in Endangered Species)", "World Wildlife Fund agreement", "UNESCO Heritage Protection"], correct: 1, fact: "CITES (Convention on International Trade in Endangered Species) helps protect endangered horse breeds from illegal trade." }
+        ];
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        function startQuiz() { document.getElementById('startScreen').style.display = 'none'; document.getElementById('quizScreen').style.display = 'block'; showQuestion(); }
+        function showQuestion() { const question = quizData[currentQuestion]; const progress = ((currentQuestion + 1) / quizData.length) * 100; document.getElementById('progressFill').style.width = progress + '%'; document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`; document.getElementById('questionText').textContent = question.question; const optionsContainer = document.getElementById('optionsContainer'); optionsContainer.innerHTML = ''; question.options.forEach((option, index) => { const button = document.createElement('button'); button.className = 'option'; button.textContent = option; button.onclick = () => selectOption(index); optionsContainer.appendChild(button); }); document.getElementById('feedback').textContent = ''; document.getElementById('feedback').className = 'feedback'; document.getElementById('nextBtn').classList.remove('show'); answered = false; }
+        function selectOption(index) { if (answered) return; answered = true; const question = quizData[currentQuestion]; const options = document.querySelectorAll('.option'); options.forEach((option, i) => { option.disabled = true; if (i === question.correct) { option.classList.add('correct'); } else if (i === index) { option.classList.add('incorrect'); } }); const feedback = document.getElementById('feedback'); feedback.classList.add('show'); if (index === question.correct) { feedback.className = 'feedback show correct'; feedback.textContent = 'Correct! ' + question.fact; score++; } else { feedback.className = 'feedback show incorrect'; feedback.textContent = 'Incorrect. ' + question.fact; } document.getElementById('nextBtn').classList.add('show'); }
+        function nextQuestion() { currentQuestion++; if (currentQuestion < quizData.length) { showQuestion(); } else { showResults(); } }
+        function showResults() { document.getElementById('quizScreen').style.display = 'none'; document.getElementById('resultsScreen').style.display = 'block'; const percentage = (score / quizData.length) * 100; const finalScore = score / quizData.length; saveQuizScore('quiz-11-wild-horses', finalScore); document.getElementById('scoreDisplay').textContent = `${score}/${quizData.length}`; let message = ''; let description = ''; let image = ''; if (percentage === 100) { message = 'Perfect Score! Conservation Expert!'; description = 'Excellent knowledge of wild horses and conservation!'; image = 'https://images.unsplash.com/photo-1560807707-38cc8baea8bb?w=500&h=250&fit=crop'; } else if (percentage >= 80) { message = 'Excellent! Strong Conservation Knowledge!'; description = 'You understand wild horse populations and issues well!'; image = 'https://images.unsplash.com/photo-1626635193086-dd1fb2ab5013?w=500&h=250&fit=crop'; } else if (percentage >= 60) { message = 'Great Job! Good Conservation Knowledge!'; description = 'You know about wild horses and endangered breeds. Keep learning!'; image = 'https://images.unsplash.com/photo-1577881287570-ec286b4ccc75?w=500&h=250&fit=crop'; } else if (percentage >= 40) { message = 'Good Try! Keep Learning!'; description = 'Wild horses and conservation efforts are important topics. Try again!'; image = 'https://images.unsplash.com/photo-1517331156700-3c241d2b4d83?w=500&h=250&fit=crop'; } else { message = 'Learning Journey Begins!'; description = 'Discover the world of wild horses and conservation efforts!'; image = 'https://images.unsplash.com/photo-1596904333116-b9ec5f4bcc8b?w=500&h=250&fit=crop'; } document.getElementById('resultsMessage').textContent = message; document.getElementById('resultsDescription').textContent = description; document.getElementById('resultsImage').src = image; }
+    </script>
+</body>
+</html>

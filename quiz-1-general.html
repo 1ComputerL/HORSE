@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 1: General Horse Facts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f08e80 0%, #f4aba1 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .start-screen p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .start-image {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(11, 13, 99, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .quiz-screen {
+            display: none;
+        }
+
+        .question-image {
+            display: none;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #f08e80 0%, #f4aba1 100%);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .question-number {
+            color: #0b0d63;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: white;
+            text-align: left;
+        }
+
+        .option:hover {
+            border-color: #f08e80;
+            background: #fff5f2;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #f08e80;
+            background: #f08e80;
+            color: white;
+        }
+
+        .option.correct {
+            border-color: #4caf50;
+            background: #4caf50;
+            color: white;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: #f44336;
+            color: white;
+        }
+
+        .option:disabled {
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: #c8e6c9;
+            color: #2e7d32;
+            border-left: 5px solid #4caf50;
+        }
+
+        .feedback.incorrect {
+            background: #ffcdd2;
+            color: #c62828;
+            border-left: 5px solid #f44336;
+        }
+
+        .next-btn {
+            margin-top: 25px;
+            display: none;
+        }
+
+        .next-btn.show {
+            display: block;
+        }
+
+        .results-screen {
+            display: none;
+            text-align: center;
+        }
+
+        .score-display {
+            font-size: 4em;
+            color: #0b0d63;
+            margin: 30px 0;
+            font-weight: bold;
+        }
+
+        .results-image {
+            width: 100%;
+            max-width: 350px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .results-message {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .results-description {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        .restart-btn {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .question-text {
+                font-size: 1.2em;
+            }
+
+            .score-display {
+                font-size: 3em;
+            }
+        }
+
+        .fun-fact {
+            background: #fdf0e6;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 5px solid #f08e80;
+            color: #0b0d63;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .fun-fact strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #0b0d63;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav style="position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%); padding: 1rem 0; z-index: 2000; box-shadow: 0 2px 10px rgba(11, 13, 99, 0.3);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" style="font-size: 24px; font-weight: bold; color: #fdf0e6; text-decoration: none; letter-spacing: 2px;">H.O.R.S.E</a>
+            <ul style="display: flex; list-style: none; gap: 30px; align-items: center;">
+                <li><a href="index.html" style="color: #fdf0e6; text-decoration: none; font-weight: 500; transition: color 0.3s ease; border-bottom: 2px solid transparent;">Home</a></li>
+                <li><a href="quizzes.html" style="color: #fdf0e6; text-decoration: none; font-weight: 500; transition: color 0.3s ease; border-bottom: 2px solid transparent; padding-bottom: 5px; border-bottom-color: #f08e80;">Quizzes</a></li>
+                <li><a href="information.html" style="color: #fdf0e6; text-decoration: none; font-weight: 500; transition: color 0.3s ease; border-bottom: 2px solid transparent;">Information</a></li>
+                <li><a href="progress.html" style="color: #fdf0e6; text-decoration: none; font-weight: 500; transition: color 0.3s ease; border-bottom: 2px solid transparent;">Progress</a></li>
+                <li><a href="about.html" style="color: #fdf0e6; text-decoration: none; font-weight: 500; transition: color 0.3s ease; border-bottom: 2px solid transparent;">About</a></li>
+            </ul>
+            <div id="auth-status" style="display: flex; align-items: center; gap: 15px;"></div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 80px;">
+        <div class="header">
+            <h1>General Horse Facts</h1>
+            <p>Test Your Equine Knowledge!</p>
+        </div>
+
+        <div class="content">
+            <!-- Start Screen -->
+            <div class="start-screen" id="startScreen">
+                <h2>Welcome to Quiz 1: General Horse Facts</h2>
+                <p>Test your knowledge on basic horse facts including speed, anatomy, lifespan, and more!</p>
+                <img src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=500&h=300&fit=crop" alt="Beautiful horse" class="start-image">
+                <button class="btn" onclick="startQuiz()">Start the Quiz</button>
+            </div>
+
+            <!-- Quiz Screen -->
+            <div class="quiz-screen" id="quizScreen">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="question-number" id="questionNumber"></div>
+                <img id="questionImage" class="question-image" alt="Question illustration">
+                <div class="question-text" id="questionText"></div>
+                <div class="options" id="optionsContainer"></div>
+                <div class="feedback" id="feedback"></div>
+                <button class="btn next-btn" id="nextBtn" onclick="nextQuestion()">Next Question</button>
+            </div>
+
+            <!-- Results Screen -->
+            <div class="results-screen" id="resultsScreen">
+                <h2>Quiz Complete</h2>
+                <div class="score-display" id="scoreDisplay"></div>
+                <img id="resultsImage" class="results-image" alt="Results celebration">
+                <div class="results-message" id="resultsMessage"></div>
+                <div class="results-description" id="resultsDescription"></div>
+                <button class="btn restart-btn" onclick="location.reload()">Take Quiz Again</button>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: center; padding: 20px; color: white; margin-top: 0;">
+        <a href="quizzes.html" style="color: #f08e80; text-decoration: none; font-weight: bold;">Back to All Quizzes</a>
+    </div>
+
+    <script src="account-utils.js"></script>
+    <script src="progress-tracker.js"></script>
+    <script>
+        const quizData = [
+            {
+                question: "What is the top speed a horse can reach?",
+                image: "https://images.unsplash.com/photo-1584645604694-26c1a6a12f2d?w=500&h=250&fit=crop",
+                options: ["35 mph", "55 mph", "70 mph", "45 mph"],
+                correct: 2,
+                fact: "Horses can reach speeds of up to 70 mph (112 km/h) in short bursts, making them incredibly fast runners!"
+            },
+            {
+                question: "How many bones does a horse have?",
+                image: "https://images.unsplash.com/photo-1571721613578-36cf41e33b1e?w=500&h=250&fit=crop",
+                options: ["186 bones", "206 bones", "226 bones", "256 bones"],
+                correct: 0,
+                fact: "Adult horses have 186 bones in their body. This skeleton provides incredible strength and flexibility!"
+            },
+            {
+                question: "What is the primary diet of horses?",
+                image: "https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?w=500&h=250&fit=crop",
+                options: ["Carrots and apples", "Grains only", "Grass and hay", "Vegetables"],
+                correct: 2,
+                fact: "Horses are herbivores and spend most of their day grazing on grass or eating hay. They have a unique digestive system!"
+            },
+            {
+                question: "How long is a horse's pregnancy?",
+                image: "https://images.unsplash.com/photo-1566201844565-a75dcac809c4?w=500&h=250&fit=crop",
+                options: ["6 months", "9 months", "11 months", "13 months"],
+                correct: 2,
+                fact: "A mare's gestation period lasts approximately 11 months (around 330-345 days). That's longer than humans!"
+            },
+            {
+                question: "Can horses sleep while standing?",
+                image: "https://images.unsplash.com/photo-1580554886783-0ed5f968f44f?w=500&h=250&fit=crop",
+                options: ["No, they must lie down", "Yes, using a special locking mechanism", "Only at night", "For very short periods only"],
+                correct: 1,
+                fact: "Yes! Horses have special locking ligaments in their legs called the 'stay apparatus' that allows them to sleep standing up."
+            },
+            {
+                question: "What do horses use their tails for primarily?",
+                image: "https://images.unsplash.com/photo-1598849465267-a7a9e5b31334?w=500&h=250&fit=crop",
+                options: ["Just for balance", "To swat flies and insects", "For communication", "All of the above"],
+                correct: 3,
+                fact: "Horses use their tails for multiple purposes: balancing while running, swatting flies, and communicating emotions!"
+            },
+            {
+                question: "How many teeth does an adult horse typically have?",
+                image: "https://images.unsplash.com/photo-1581558449379-e1cb10a23d1c?w=500&h=250&fit=crop",
+                options: ["28 teeth", "40 teeth", "52 teeth", "64 teeth"],
+                correct: 1,
+                fact: "Adult horses have 40 teeth (males) or 36 teeth (females). They use their powerful molars to grind grass and hay!"
+            },
+            {
+                question: "What is the lifespan of a typical horse?",
+                image: "https://images.unsplash.com/photo-1622184386667-fdf8fac42f23?w=500&h=250&fit=crop",
+                options: ["15-20 years", "25-30 years", "10-15 years", "30-40 years"],
+                correct: 1,
+                fact: "Horses typically live 25-30 years in good conditions. Some have been known to live into their 40s!"
+            },
+            {
+                question: "How wide is a horse's field of vision?",
+                image: "https://images.unsplash.com/photo-1596904333116-b9ec5f4bcc8b?w=500&h=250&fit=crop",
+                options: ["180 degrees", "270 degrees", "350 degrees", "200 degrees"],
+                correct: 2,
+                fact: "Horses have an almost 360-degree field of vision (350°), which helps them detect predators from almost any direction!"
+            },
+            {
+                question: "What is the name of a young horse?",
+                image: "https://images.unsplash.com/photo-1552224496-3d26fd73d2b9?w=500&h=250&fit=crop",
+                options: ["Pony", "Colt (male) or Filly (female)", "Yearling", "Foal"],
+                correct: 1,
+                fact: "Young horses are called foals when very young, and then colts (males) or fillies (females) as they grow. A yearling is one year old!"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizScreen').style.display = 'block';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = quizData[currentQuestion];
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+            document.getElementById('questionText').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option';
+                button.textContent = option;
+                button.onclick = () => selectOption(index);
+                optionsContainer.appendChild(button);
+            });
+
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').className = 'feedback';
+            document.getElementById('nextBtn').classList.remove('show');
+            answered = false;
+        }
+
+        function selectOption(index) {
+            if (answered) return;
+            
+            answered = true;
+            const question = quizData[currentQuestion];
+            const options = document.querySelectorAll('.option');
+            
+            options.forEach((option, i) => {
+                option.disabled = true;
+                if (i === question.correct) {
+                    option.classList.add('correct');
+                } else if (i === index) {
+                    option.classList.add('incorrect');
+                }
+            });
+
+            const feedback = document.getElementById('feedback');
+            feedback.classList.add('show');
+            
+            if (index === question.correct) {
+                feedback.className = 'feedback show correct';
+                feedback.textContent = 'Correct! ' + question.fact;
+                score++;
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = 'Incorrect. ' + question.fact;
+            }
+
+            document.getElementById('nextBtn').classList.add('show');
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion < quizData.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('resultsScreen').style.display = 'block';
+            
+            const percentage = (score / quizData.length) * 100;
+            const finalScore = score / quizData.length;
+            document.getElementById('scoreDisplay').textContent = `${score}/${quizData.length}`;
+            
+            // Save score to local storage
+            saveQuizScore('quiz-1-general', finalScore);
+            
+            let message = '';
+            let description = '';
+            let image = '';
+
+            if (percentage === 100) {
+                message = 'Perfect Score! You\'re a Horse Expert!';
+                description = 'Absolutely incredible! You know everything about horses. You should consider becoming an equestrian specialist!';
+                image = 'https://images.unsplash.com/photo-1560807707-38cc8baea8bb?w=500&h=250&fit=crop';
+            } else if (percentage >= 80) {
+                message = 'Excellent! You\'re a Horse Enthusiast!';
+                description = 'Outstanding work! You have impressive knowledge about horses. Keep learning and you\'ll be an expert soon!';
+                image = 'https://images.unsplash.com/photo-1626635193086-dd1fb2ab5013?w=500&h=250&fit=crop';
+            } else if (percentage >= 60) {
+                message = 'Great Job! You Know a Lot About Horses!';
+                description = 'Very good performance! You have solid knowledge. Read up on some fun horse facts and try again!';
+                image = 'https://images.unsplash.com/photo-1577881287570-ec286b4ccc75?w=500&h=250&fit=crop';
+            } else if (percentage >= 40) {
+                message = 'Good Try! Keep Learning About Horses!';
+                description = 'You got some right! Horses are fascinating creatures with lots of amazing facts. Try the quiz again!';
+                image = 'https://images.unsplash.com/photo-1517331156700-3c241d2b4d83?w=500&h=250&fit=crop';
+            } else {
+                message = 'Learning Journey Begins!';
+                description = 'No worries! Horses are full of surprises. Check out the facts you learned and try again. Every expert was once a beginner!';
+                image = 'https://images.unsplash.com/photo-1596904333116-b9ec5f4bcc8b?w=500&h=250&fit=crop';
+            }
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('resultsDescription').textContent = description;
+            document.getElementById('resultsImage').src = image;
+        }
+    </script>
+</body>
+</html>

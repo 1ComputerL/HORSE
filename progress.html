@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Progress - H.O.R.S.E News Now</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fdf0e6;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(11, 13, 99, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fdf0e6;
+            text-decoration: none;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo:hover {
+            color: #f08e80;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fdf0e6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #f08e80;
+            border-bottom-color: #f08e80;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-header h1 {
+            font-size: 42px;
+            color: #0b0d63;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            color: #666;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(11, 13, 99, 0.1);
+            text-align: center;
+            border-top: 4px solid #f08e80;
+        }
+
+        .stat-card h3 {
+            color: #0b0d63;
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 48px;
+            font-weight: bold;
+            color: #f08e80;
+            margin-bottom: 10px;
+        }
+
+        .stat-unit {
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(11, 13, 99, 0.1);
+            margin-bottom: 50px;
+        }
+
+        .progress-container h2 {
+            color: #0b0d63;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #f08e80, #f4aba1);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: right;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Quiz Results Section */
+        .results-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(11, 13, 99, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .results-section h2 {
+            color: #0b0d63;
+            font-size: 24px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #f08e80;
+            padding-bottom: 15px;
+        }
+
+        .quiz-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s ease;
+        }
+
+        .quiz-result-item:hover {
+            background: #f9f9f9;
+        }
+
+        .quiz-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .quiz-name {
+            font-weight: 600;
+            color: #0b0d63;
+            flex-grow: 1;
+        }
+
+        .quiz-score {
+            background: linear-gradient(135deg, #f08e80 0%, #f4aba1 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .quiz-date {
+            color: #999;
+            font-size: 13px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: #fdf0e6;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: #f08e80;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #fdf0e6;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 15px;
+                font-size: 14px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .stat-value {
+                font-size: 36px;
+            }
+
+            .quiz-result-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .quiz-score {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">H.O.R.S.E</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="information.html">Information</a></li>
+                <li><a href="progress.html" class="active">Progress</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div id="auth-status" style="display: flex; align-items: center; gap: 15px; margin-left: auto;"></div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Your Learning Progress</h1>
+            <p>Track your equine knowledge journey and celebrate your achievements</p>
+        </section>
+
+        <!-- Stats Grid -->
+        <section class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <h3>Quizzes Completed</h3>
+                <div class="stat-value" id="completedCount">0</div>
+                <div class="stat-unit">out of 11</div>
+            </div>
+            <div class="stat-card">
+                <h3>Completion Rate</h3>
+                <div class="stat-value" id="completionPercent">0%</div>
+                <div class="stat-unit">progress</div>
+            </div>
+            <div class="stat-card">
+                <h3>Average Score</h3>
+                <div class="stat-value" id="averageScore">0.0</div>
+                <div class="stat-unit">out of 10</div>
+            </div>
+        </section>
+
+        <!-- Progress Bar -->
+        <section class="progress-container" id="progressSection" style="display: none;">
+            <h2>Overall Progress</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%;">
+                    <span id="progressPercent">0%</span>
+                </div>
+            </div>
+            <div class="progress-text" id="progressText">0 of 11 quizzes completed</div>
+        </section>
+
+        <!-- Completed Quizzes -->
+        <section class="results-section" id="completedSection" style="display: none;">
+            <h2>Completed Quizzes</h2>
+            <div id="completedList"></div>
+        </section>
+
+        <!-- Incomplete Quizzes -->
+        <section class="results-section" id="incompleteSection" style="display: none;">
+            <h2>Quizzes to Complete</h2>
+            <div id="incompleteList"></div>
+        </section>
+
+        <!-- Empty State -->
+        <section id="emptyState" style="display: none;">
+            <div class="empty-state">
+                <h3>No Quizzes Completed Yet</h3>
+                <p>Start your equine knowledge journey by taking some quizzes!</p>
+                <a href="quizzes.html" class="cta-button">Browse All Quizzes</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 H.O.R.S.E News Now. All rights reserved.</p>
+        <p>Helping Obsessions Related to the Species of Equines - An equine knowledge and quiz platform dedicated to horse enthusiasts everywhere.</p>
+    </footer>
+
+    <script src="account-utils.js"></script>
+    <script src="progress-tracker.js"></script>
+    <script>
+        function displayProgress() {
+            const stats = getStatistics();
+            
+            if (stats.totalCompleted === 0) {
+                document.getElementById('emptyState').style.display = 'block';
+                document.getElementById('statsGrid').style.display = 'none';
+                document.getElementById('progressSection').style.display = 'none';
+                document.getElementById('completedSection').style.display = 'none';
+                document.getElementById('incompleteSection').style.display = 'none';
+                return;
+            }
+
+            // Update stats
+            document.getElementById('completedCount').textContent = stats.totalCompleted;
+            document.getElementById('completionPercent').textContent = stats.completionPercentage + '%';
+            document.getElementById('averageScore').textContent = (stats.averageScore * 10).toFixed(1);
+
+            // Update progress bar
+            document.getElementById('progressSection').style.display = 'block';
+            document.getElementById('progressFill').style.width = stats.completionPercentage + '%';
+            document.getElementById('progressPercent').textContent = stats.completionPercentage + '%';
+            document.getElementById('progressText').textContent = `${stats.totalCompleted} of 11 quizzes completed`;
+
+            // Display completed quizzes
+            if (stats.completedQuizzes.length > 0) {
+                document.getElementById('completedSection').style.display = 'block';
+                let completedHtml = '';
+                stats.completedQuizzes.forEach(quiz => {
+                    const date = new Date(quiz.completedAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+                    const score = (quiz.score * 10).toFixed(1);
+                    completedHtml += `
+                        <div class="quiz-result-item">
+                            <div class="quiz-name">${getQuizNameFromId(quiz.name)}</div>
+                            <div class="quiz-score">${score}/10</div>
+                            <div class="quiz-date">${date}</div>
+                        </div>
+                    `;
+                });
+                document.getElementById('completedList').innerHTML = completedHtml;
+            }
+
+            // Display incomplete quizzes
+            if (stats.incompletedQuizzes.length > 0) {
+                document.getElementById('incompleteSection').style.display = 'block';
+                let incompleteHtml = '';
+                stats.incompletedQuizzes.forEach(quizId => {
+                    incompleteHtml += `
+                        <div class="quiz-result-item">
+                            <div class="quiz-name">${getQuizNameFromId(quizId)}</div>
+                            <a href="${quizId}.html" class="cta-button" style="padding: 6px 16px; font-size: 13px;">Take Quiz</a>
+                        </div>
+                    `;
+                });
+                document.getElementById('incompleteList').innerHTML = incompleteHtml;
+            }
+        }
+
+        // Display progress on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            displayProgress();
+        });
+    </script>
+</body>
+</html>

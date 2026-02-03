@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horse Care & Training - H.O.R.S.E News Now</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fdf0e6;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(11, 13, 99, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fdf0e6;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .logo:hover {
+            color: #f08e80;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #fdf0e6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #f08e80;
+            border-bottom-color: #f08e80;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb a {
+            color: #0b0d63;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            color: #f08e80;
+        }
+
+        .breadcrumb span {
+            color: #999;
+            margin: 0 8px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: #fdf0e6;
+            padding: 60px 40px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .content h2 {
+            color: #0b0d63;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 28px;
+            border-bottom: 3px solid #f08e80;
+            padding-bottom: 10px;
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            color: #f08e80;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .content li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(240, 142, 128, 0.1) 0%, rgba(26, 29, 127, 0.05) 100%);
+            border-left: 4px solid #f08e80;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .checklist {
+            background: #fdf0e6;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .checklist h4 {
+            color: #0b0d63;
+            margin-bottom: 12px;
+        }
+
+        .checklist ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .checklist li {
+            padding-left: 25px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #f08e80;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .sources {
+            background: #fdf0e6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid #0b0d63;
+        }
+
+        .sources h3 {
+            color: #0b0d63;
+            margin-bottom: 15px;
+        }
+
+        .sources a {
+            color: #0b0d63;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .sources a:hover {
+            color: #f08e80;
+            text-decoration: underline;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .nav-buttons a {
+            flex: 1;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(11, 13, 99, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f08e80;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #e67d6f;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(240, 142, 128, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">H.O.R.S.E</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="information.html">Information</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="information.html">Information Hub</a>
+            <span>/</span>
+            <strong>Horse Care & Training</strong>
+        </div>
+
+        <div class="hero">
+            <h1>Horse Care & Training</h1>
+            <p>Master the essentials of keeping horses healthy, happy, and well-trained</p>
+        </div>
+
+        <div class="content">
+            <h2>Daily Horse Care</h2>
+            <p>Proper horse care is essential for maintaining health, happiness, and longevity. A daily routine establishes good habits for both horse and caretaker.</p>
+
+            <h3>Daily Care Checklist</h3>
+            <div class="checklist">
+                <h4>Morning Routine</h4>
+                <ul>
+                    <li>Check horse for injuries, lameness, or illness</li>
+                    <li>Clean water buckets and provide fresh water</li>
+                    <li>Provide morning hay or pasture access</li>
+                    <li>Feed grain (if appropriate for the horse)</li>
+                    <li>Muck out stalls completely</li>
+                    <li>Check hooves for debris or injuries</li>
+                </ul>
+            </div>
+
+            <div class="checklist">
+                <h4>Throughout the Day</h4>
+                <ul>
+                    <li>Ensure constant access to fresh water</li>
+                    <li>Monitor pasture condition and safety</li>
+                    <li>Check on horse multiple times</li>
+                    <li>Provide hay between meals</li>
+                </ul>
+            </div>
+
+            <div class="checklist">
+                <h4>Evening Routine</h4>
+                <ul>
+                    <li>Final health check</li>
+                    <li>Clean water and provide fresh water</li>
+                    <li>Provide evening hay</li>
+                    <li>Muck out stalls</li>
+                    <li>Check hooves again before bedding down</li>
+                    <li>Secure gates and check fences</li>
+                </ul>
+            </div>
+
+            <h2>Nutrition & Feeding</h2>
+            <p>Horses are herbivores and grazers by nature. A proper diet is fundamental to their health.</p>
+
+            <h3>Basic Dietary Requirements</h3>
+            <ul>
+                <li><strong>Hay/Pasture:</strong> 50-100% of daily caloric intake; minimum 1.5% of body weight daily</li>
+                <li><strong>Fresh Water:</strong> 5-10 gallons per day for average horse (more if exercised)</li>
+                <li><strong>Grain:</strong> 0.5-1% of body weight daily (adjust based on activity and need)</li>
+                <li><strong>Minerals:</strong> Calcium, phosphorus, trace minerals (copper, zinc, selenium)</li>
+                <li><strong>Vitamins:</strong> A, D, and E supplementation may be necessary</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Feeding Tips:</strong>
+                <p>Feed small meals frequently (3-4 times daily) rather than large meals once or twice daily. This mimics natural grazing patterns and aids digestion.</p>
+            </div>
+
+            <h2>Grooming</h2>
+            <p>Regular grooming is essential for health, hygiene, and bonding with your horse.</p>
+
+            <h3>Basic Grooming Steps</h3>
+            <ul>
+                <li><strong>Curry Comb:</strong> Use circular motions to loosen dirt and dead hair</li>
+                <li><strong>Dandy Brush:</strong> Flick away loose hair and dirt</li>
+                <li><strong>Body Brush:</strong> Smooth the coat for a shiny appearance</li>
+                <li><strong>Mane and Tail Comb:</strong> Gently detangle to avoid hair loss</li>
+                <li><strong>Face Cloth:</strong> Gently clean face, eyes, and nostrils</li>
+                <li><strong>Hoof Pick:</strong> Remove debris from hooves daily</li>
+            </ul>
+
+            <h2>Hoof Care</h2>
+            <p>A horse's feet require regular attention. "No foot, no horse" is a well-known equestrian saying.</p>
+
+            <h3>Hoof Care Essentials</h3>
+            <ul>
+                <li><strong>Daily Picking:</strong> Pick hooves before and after rides to remove debris</li>
+                <li><strong>Regular Trimming:</strong> Every 6-8 weeks by a qualified farrier</li>
+                <li><strong>Shoeing:</strong> Every 6-8 weeks if the horse is shod</li>
+                <li><strong>Inspections:</strong> Regular farrier checks for issues</li>
+                <li><strong>Hoof Hygiene:</strong> Keep stalls clean and dry to prevent thrush</li>
+            </ul>
+
+            <h2>Health & Veterinary Care</h2>
+
+            <h3>Annual Veterinary Visits</h3>
+            <ul>
+                <li>Physical examination</li>
+                <li>Vaccinations (against tetanus, equine influenza, etc.)</li>
+                <li>Dental examination and floating teeth</li>
+                <li>Deworming</li>
+                <li>Discussion of health concerns</li>
+            </ul>
+
+            <h3>Common Health Issues</h3>
+            <ul>
+                <li><strong>Colic:</strong> Digestive upset; requires immediate attention</li>
+                <li><strong>Lameness:</strong> Limping or uneven gait; may indicate pain</li>
+                <li><strong>Thrush:</strong> Fungal/bacterial infection in hooves</li>
+                <li><strong>Laminitis:</strong> Inflammatory condition of the hooves</li>
+                <li><strong>Wounds:</strong> Require proper cleaning and care</li>
+            </ul>
+
+            <h2>Training Basics</h2>
+            <p>Training should be based on positive reinforcement, consistency, and understanding of equine behavior.</p>
+
+            <h3>Training Principles</h3>
+            <ul>
+                <li><strong>Be Consistent:</strong> Use the same cues for the same responses</li>
+                <li><strong>Reward Good Behavior:</strong> Use treats, praise, or release of pressure</li>
+                <li><strong>Stay Calm:</strong> Horses are sensitive to your emotions</li>
+                <li><strong>Start Simple:</strong> Build foundation skills before advanced techniques</li>
+                <li><strong>Be Patient:</strong> Each horse learns at their own pace</li>
+                <li><strong>Safety First:</strong> Always prioritize safety for you and the horse</li>
+            </ul>
+
+            <h3>Training Stages</h3>
+            <ul>
+                <li><strong>Groundwork:</strong> Leading, longing, lunging, desensitization</li>
+                <li><strong>Backing:</strong> Introduction to saddle and rider</li>
+                <li><strong>Basic Riding:</strong> Walk, trot, canter, stopping</li>
+                <li><strong>Advanced Training:</strong> Collection, lateral movements, jumping (as desired)</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Professional Help:</strong>
+                <p>Consider working with a qualified trainer, especially for starting young horses or if you're new to horse care and training. Professional guidance can prevent bad habits and injuries.</p>
+            </div>
+
+            <h2>Exercise & Turnout</h2>
+            <ul>
+                <li>Horses need at least 1-2 hours of pasture time daily</li>
+                <li>Regular exercise prevents behavioral issues and maintains health</li>
+                <li>Vary exercise to prevent boredom and overuse injuries</li>
+                <li>Start slow in spring and increase gradually</li>
+                <li>Cool down properly after exercise</li>
+            </ul>
+
+            <h2>Shelter & Environment</h2>
+            <ul>
+                <li><strong>Shelter:</strong> Protection from extreme weather</li>
+                <li><strong>Pasture:</strong> Safe, well-maintained grazing areas</li>
+                <li><strong>Fencing:</strong> Secure 4.5-5 feet tall</li>
+                <li><strong>Water:</strong> Clean, accessible water sources</li>
+                <li><strong>Space:</strong> Minimum 1 acre per horse (more is better)</li>
+            </ul>
+
+            <div class="sources">
+                <h3>Sources & Further Reading:</h3>
+                <ul>
+                    <li><a href="https://www.aaha.org" target="_blank">📖 American Animal Hospital Association</a></li>
+                    <li><a href="https://www.thesprucepets.com" target="_blank">📖 The Spruce Pets - Horse Care Guides</a></li>
+                    <li><a href="https://www.equinewelfareresource.org" target="_blank">📖 Equine Welfare Resource</a></li>
+                    <li><a href="https://www.aafco.org" target="_blank">📖 American Association of Feed Control Officials</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="information.html"><button class="btn-primary">Back to Information Hub</button></a>
+                <a href="info-history.html"><button class="btn-secondary">Next: History →</button></a>
+            </div>
+        </div>
+    </div>
+
+    <script src="account-utils.js"></script>
+</body>
+</html>

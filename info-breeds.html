@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horse Breeds - H.O.R.S.E News Now</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fdf0e6;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(11, 13, 99, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fdf0e6;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .logo:hover {
+            color: #f08e80;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #fdf0e6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #f08e80;
+            border-bottom-color: #f08e80;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb a {
+            color: #0b0d63;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            color: #f08e80;
+        }
+
+        .breadcrumb span {
+            color: #999;
+            margin: 0 8px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: #fdf0e6;
+            padding: 60px 40px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .content h2 {
+            color: #0b0d63;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 28px;
+            border-bottom: 3px solid #f08e80;
+            padding-bottom: 10px;
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            color: #f08e80;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .content li {
+            margin-bottom: 8px;
+        }
+
+        .breed-card {
+            background: #fdf0e6;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #f08e80;
+        }
+
+        .breed-card h4 {
+            color: #0b0d63;
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(240, 142, 128, 0.1) 0%, rgba(26, 29, 127, 0.05) 100%);
+            border-left: 4px solid #f08e80;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .sources {
+            background: #fdf0e6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid #0b0d63;
+        }
+
+        .sources h3 {
+            color: #0b0d63;
+            margin-bottom: 15px;
+        }
+
+        .sources a {
+            color: #0b0d63;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .sources a:hover {
+            color: #f08e80;
+            text-decoration: underline;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .nav-buttons a {
+            flex: 1;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(11, 13, 99, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f08e80;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #e67d6f;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(240, 142, 128, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">H.O.R.S.E</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="information.html">Information</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="information.html">Information Hub</a>
+            <span>/</span>
+            <strong>Horse Breeds</strong>
+        </div>
+
+        <div class="hero">
+            <h1>Horse Breeds</h1>
+            <p>Exploring the amazing diversity of horse breeds around the world</p>
+        </div>
+
+        <div class="content">
+            <h2>Horse Breed Diversity</h2>
+            <p>There are over 300 recognized horse breeds worldwide, each developed for specific purposes and adapted to different environments. These breeds range from tiny miniature horses weighing just 200 pounds to massive draft horses weighing over 2,000 pounds.</p>
+
+            <h2>Breed Classifications</h2>
+            <p>Horse breeds are typically classified into several categories:</p>
+            <ul>
+                <li><strong>Draft Horses:</strong> Large, powerful horses for pulling and farm work</li>
+                <li><strong>Warmblood:</strong> Athletic horses used in sports</li>
+                <li><strong>Coldblood:</strong> Heavy, sturdy horses</li>
+                <li><strong>Hotblood:</strong> Refined, spirited horses</li>
+                <li><strong>Ponies:</strong> Smaller horses under 14.2 hands high</li>
+                <li><strong>Miniature Horses:</strong> Extremely small horses, under 38 inches tall</li>
+            </ul>
+
+            <h2>Popular Horse Breeds</h2>
+
+            <div class="breed-card">
+                <h4>Thoroughbred</h4>
+                <p><strong>Origin:</strong> England | <strong>Height:</strong> 15.2-16.2 hands | <strong>Purpose:</strong> Racing, show jumping</p>
+                <p>Known for their speed, athleticism, and spirited nature. Thoroughbreds are the most common breed in horse racing. They have refined features, long legs, and lean bodies built for speed.</p>
+            </div>
+
+            <div class="breed-card">
+                <h4>Arabian</h4>
+                <p><strong>Origin:</strong> Arabian Peninsula | <strong>Height:</strong> 14.1-15.1 hands | <strong>Purpose:</strong> Endurance, pleasure riding</p>
+                <p>One of the oldest breeds, prized for their beauty and stamina. Arabians have distinctive facial profiles with a bulge between the eyes, are known for their intelligence and loyalty.</p>
+            </div>
+
+            <div class="breed-card">
+                <h4>Quarter Horse</h4>
+                <p><strong>Origin:</strong> United States | <strong>Height:</strong> 14.2-15.2 hands | <strong>Purpose:</strong> Western riding, racing</p>
+                <p>America's most popular breed, known for their calm temperament and versatility. Quarter horses are compact and muscular, excellent for ranch work and barrel racing.</p>
+            </div>
+
+            <div class="breed-card">
+                <h4>Friesian</h4>
+                <p><strong>Origin:</strong> Netherlands | <strong>Height:</strong> 15-17 hands | <strong>Purpose:</strong> Dressage, pleasure riding</p>
+                <p>Striking black horses with long, flowing manes and tails. Friesians are known for their baroque-style features, strength, and elegant movement despite their large size.</p>
+            </div>
+
+            <div class="breed-card">
+                <h4>Shire</h4>
+                <p><strong>Origin:</strong> England | <strong>Height:</strong> 16.2-17.2 hands | <strong>Purpose:</strong> Draft work, pulling</p>
+                <p>One of the largest horse breeds, originally bred for farm work. Shires are gentle giants, incredibly strong, and still used today for pulling and show purposes.</p>
+            </div>
+
+            <div class="breed-card">
+                <h4>Mustang</h4>
+                <p><strong>Origin:</strong> Wild horses of North America | <strong>Height:</strong> 13-15 hands | <strong>Purpose:</strong> Pleasure riding, ranch work</p>
+                <p>Descended from Spanish horses, mustangs are wild and semi-wild horses. Known for their hardiness, intelligence, and independence, many are adopted through government programs.</p>
+            </div>
+
+            <div class="breed-card">
+                <h4>Morgan</h4>
+                <p><strong>Origin:</strong> United States | <strong>Height:</strong> 14.1-15.2 hands | <strong>Purpose:</strong> All-purpose, versatile</p>
+                <p>Compact and muscular with an easy temperament. Morgans excel in multiple disciplines and are known as "people horses" due to their friendly, intelligent nature.</p>
+            </div>
+
+            <div class="breed-card">
+                <h4>Lipizzan</h4>
+                <p><strong>Origin:</strong> Austria | <strong>Height:</strong> 14.2-15.2 hands | <strong>Purpose:</strong> Classical dressage</p>
+                <p>Famous for their use in classical Spanish riding schools. Lipizzans are known for their natural ability to perform high school movements like the levade and capriole.</p>
+            </div>
+
+            <h2>Specialized Breed Types</h2>
+
+            <h3>Pony Breeds</h3>
+            <p>Ponies (under 14.2 hands) include Shetland, Welsh, Connemara, and Icelandic breeds. They're often used for children's riding, driving, and sport. Despite their size, many possess incredible strength and character.</p>
+
+            <h3>Miniature Horses</h3>
+            <p>Standing 32-38 inches tall, miniature horses are used for companionship, show purposes, and as guide animals. They possess the same proportions and temperament as full-size horses.</p>
+
+            <h3>Gaited Horses</h3>
+            <p>Some breeds like Paso Finos, Tennessee Walkers, and Saddlebreds have natural four-beat gaits instead of the standard trot. This provides smoother rides for longer distances.</p>
+
+            <div class="info-box">
+                <strong>Did You Know?</strong>
+                <p>The smallest horse breed is the Falabella from Argentina, which can stand as little as 30 inches tall. The tallest was Sampson, a Shire horse that stood 21.2 hands high (over 7 feet tall!).</p>
+            </div>
+
+            <h2>Choosing the Right Breed</h2>
+            <p>When selecting a horse, consider:</p>
+            <ul>
+                <li>Your experience level and riding discipline</li>
+                <li>Temperament and training requirements</li>
+                <li>Climate and pasture conditions</li>
+                <li>Maintenance and care needs</li>
+                <li>Budget for purchase and ongoing care</li>
+            </ul>
+
+            <div class="sources">
+                <h3>Sources & Further Reading:</h3>
+                <ul>
+                    <li><a href="https://www.britannica.com/animal/horse" target="_blank">📖 Britannica - Horse Breeds</a></li>
+                    <li><a href="https://www.thesprucepets.com" target="_blank">📖 The Spruce Pets - Horse Breed Guides</a></li>
+                    <li><a href="https://www.aaha.org" target="_blank">📖 American Animal Hospital Association</a></li>
+                    <li><a href="https://www.equinewelfareresource.org" target="_blank">📖 Equine Welfare Resource</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="information.html"><button class="btn-primary">Back to Information Hub</button></a>
+                <a href="info-care.html"><button class="btn-secondary">Next: Care & Training →</button></a>
+            </div>
+        </div>
+    </div>
+
+    <script src="account-utils.js"></script>
+</body>
+</html>

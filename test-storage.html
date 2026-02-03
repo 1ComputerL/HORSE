@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Storage</title>
+</head>
+<body>
+    <h1>Storage Test</h1>
+    <button onclick="testSave()">Save Quiz Score</button>
+    <button onclick="testLoad()">Load Scores</button>
+    <button onclick="testStats()">Get Statistics</button>
+    <button onclick="clearStorage()">Clear Storage</button>
+    <pre id="output"></pre>
+
+    <script src="account-utils.js"></script>
+    <script src="progress-tracker.js"></script>
+    <script>
+        function log(msg) {
+            document.getElementById('output').innerHTML += msg + '\n';
+        }
+
+        function testSave() {
+            log('Saving quiz score...');
+            const result = saveQuizScore('quiz-1-general', 0.85);
+            log('Save result: ' + JSON.stringify(result));
+            log('localStorage content: ' + localStorage.getItem('quizScores'));
+        }
+
+        function testLoad() {
+            log('\n--- Load Test ---');
+            const scores = loadFromStorage('quizScores');
+            log('Loaded scores: ' + JSON.stringify(scores, null, 2));
+        }
+
+        function testStats() {
+            log('\n--- Statistics Test ---');
+            const stats = getStatistics();
+            log('Statistics: ' + JSON.stringify(stats, null, 2));
+        }
+
+        function clearStorage() {
+            localStorage.clear();
+            log('\nStorage cleared');
+        }
+    </script>
+</body>
+</html>

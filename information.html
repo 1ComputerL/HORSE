@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horse Information - H.O.R.S.E News Now</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fdf0e6;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(11, 13, 99, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fdf0e6;
+            text-decoration: none;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo:hover {
+            color: #f08e80;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fdf0e6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #f08e80;
+            border-bottom-color: #f08e80;
+        }
+
+        #auth-status {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Page Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: #fdf0e6;
+            padding: 80px 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 60px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .info-card-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fdf0e6;
+            font-size: 48px;
+        }
+
+        .info-card-content {
+            padding: 25px;
+        }
+
+        .info-card h3 {
+            color: #0b0d63;
+            margin-bottom: 12px;
+            font-size: 22px;
+        }
+
+        .info-card p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .info-card a {
+            display: inline-block;
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .info-card a:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(11, 13, 99, 0.3);
+        }
+
+        .featured-section {
+            background: linear-gradient(135deg, #f08e80 0%, #ff7a5c 100%);
+            padding: 40px;
+            border-radius: 8px;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .featured-section h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .featured-section p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .featured-section a {
+            background: white;
+            color: #f08e80;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .featured-section a:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .learn-path {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .learn-path h2 {
+            color: #0b0d63;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .path-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .path-step {
+            background: #fdf0e6;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #f08e80;
+            position: relative;
+        }
+
+        .path-step h4 {
+            color: #0b0d63;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-number {
+            background: #f08e80;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .path-step p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-section {
+                padding: 25px;
+            }
+
+            .learn-path {
+                padding: 25px;
+            }
+
+            .nav-links {
+                gap: 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">H.O.R.S.E</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="information.html" class="active">Information</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="about.html">About</a></li>
+
+            </ul>
+            <div id="auth-status"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Horse Information Hub</h1>
+            <p>Explore comprehensive, well-researched information about horses from anatomy to conservation</p>
+        </div>
+
+        <div class="featured-section">
+            <h2>Did You Know?</h2>
+            <p>Horses have been domesticated for over 6,000 years and have played crucial roles in human civilization, from transportation to warfare to companionship. Today, there are approximately 60 million horses in the world, and they continue to be valued for their beauty, intelligence, and character.</p>
+            <a href="info-history.html">Learn More Horse History →</a>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="info-card-image">🧬</div>
+                <div class="info-card-content">
+                    <h3>Horse Anatomy</h3>
+                    <p>Discover the complex biological systems that make horses remarkable athletes. Learn about skeletal structure, muscular systems, and physiological adaptations.</p>
+                    <a href="info-anatomy.html">Explore Anatomy →</a>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-image">🎯</div>
+                <div class="info-card-content">
+                    <h3>Horse Behavior</h3>
+                    <p>Understand equine psychology and social behaviors. Learn how horses communicate, form bonds, and interact with their environment and humans.</p>
+                    <a href="info-behavior.html">Explore Behavior →</a>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-image">🐴</div>
+                <div class="info-card-content">
+                    <h3>Horse Breeds</h3>
+                    <p>Explore the diverse world of horse breeds. From tiny Shetland ponies to massive Percherons, discover what makes each breed unique.</p>
+                    <a href="info-breeds.html">Explore Breeds →</a>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-image">🌱</div>
+                <div class="info-card-content">
+                    <h3>Horse Care & Training</h3>
+                    <p>Master the essentials of horse care, nutrition, exercise, and training techniques. Learn how to keep horses healthy and happy.</p>
+                    <a href="info-care.html">Explore Care →</a>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-image">📚</div>
+                <div class="info-card-content">
+                    <h3>Horse History</h3>
+                    <p>Journey through the fascinating history of horses in human civilization. From ancient times to modern day, discover their incredible legacy.</p>
+                    <a href="info-history.html">Explore History →</a>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-image">🥗</div>
+                <div class="info-card-content">
+                    <h3>Nutrition & Diet</h3>
+                    <p>Learn about proper equine nutrition and dietary requirements. Understand what horses eat in the wild and how to provide balanced nutrition.</p>
+                    <a href="info-nutrition.html">Explore Nutrition →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="learn-path">
+            <h2>Your Learning Path</h2>
+            <div class="path-steps">
+                <div class="path-step">
+                    <h4><span class="step-number">1</span>Understand Anatomy</h4>
+                    <p>Start by learning how horses are built and how their bodies work</p>
+                </div>
+                <div class="path-step">
+                    <h4><span class="step-number">2</span>Learn Behavior</h4>
+                    <p>Understand how horses think and communicate with each other</p>
+                </div>
+                <div class="path-step">
+                    <h4><span class="step-number">3</span>Explore Breeds</h4>
+                    <p>Discover the amazing diversity across different horse breeds</p>
+                </div>
+                <div class="path-step">
+                    <h4><span class="step-number">4</span>Master Care</h4>
+                    <p>Learn the practical skills needed to care for horses properly</p>
+                </div>
+                <div class="path-step">
+                    <h4><span class="step-number">5</span>Know History</h4>
+                    <p>Understand horses' important role throughout human history</p>
+                </div>
+                <div class="path-step">
+                    <h4><span class="step-number">6</span>Perfect Nutrition</h4>
+                    <p>Learn what horses need to eat to stay healthy and strong</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="account-utils.js"></script>
+</body>
+</html>

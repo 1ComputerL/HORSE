@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horse Nutrition & Diet - H.O.R.S.E News Now</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fdf0e6;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(11, 13, 99, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fdf0e6;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .logo:hover {
+            color: #f08e80;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #fdf0e6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #f08e80;
+            border-bottom-color: #f08e80;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb a {
+            color: #0b0d63;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            color: #f08e80;
+        }
+
+        .breadcrumb span {
+            color: #999;
+            margin: 0 8px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: #fdf0e6;
+            padding: 60px 40px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .content h2 {
+            color: #0b0d63;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 28px;
+            border-bottom: 3px solid #f08e80;
+            padding-bottom: 10px;
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            color: #f08e80;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .content li {
+            margin-bottom: 8px;
+        }
+
+        .nutrition-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .nutrition-table th {
+            background: #0b0d63;
+            color: #fdf0e6;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .nutrition-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+        }
+
+        .nutrition-table tr:nth-child(even) {
+            background: #fdf0e6;
+        }
+
+        .nutrition-table tr:hover {
+            background: #fff9f7;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(240, 142, 128, 0.1) 0%, rgba(26, 29, 127, 0.05) 100%);
+            border-left: 4px solid #f08e80;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .warning-box strong {
+            color: #856404;
+        }
+
+        .sources {
+            background: #fdf0e6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid #0b0d63;
+        }
+
+        .sources h3 {
+            color: #0b0d63;
+            margin-bottom: 15px;
+        }
+
+        .sources a {
+            color: #0b0d63;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .sources a:hover {
+            color: #f08e80;
+            text-decoration: underline;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .nav-buttons a {
+            flex: 1;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(11, 13, 99, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f08e80;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #e67d6f;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(240, 142, 128, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .nutrition-table {
+                font-size: 14px;
+            }
+
+            .nutrition-table th, .nutrition-table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">H.O.R.S.E</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="information.html">Information</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="information.html">Information Hub</a>
+            <span>/</span>
+            <strong>Horse Nutrition & Diet</strong>
+        </div>
+
+        <div class="hero">
+            <h1>Horse Nutrition & Diet</h1>
+            <p>Understanding proper equine nutrition for optimal health and performance</p>
+        </div>
+
+        <div class="content">
+            <h2>Natural Diet of Horses</h2>
+            <p>In the wild, horses are continuous grazers, spending 14-18 hours per day eating. Their digestive system is specifically adapted for this constant intake of plant material.</p>
+
+            <h3>Wild Grazing Habits</h3>
+            <ul>
+                <li>Horses graze on grasses, clover, and legumes</li>
+                <li>They travel several miles daily while foraging</li>
+                <li>Diet changes seasonally based on available vegetation</li>
+                <li>They prefer young, tender grass over mature plants</li>
+                <li>Water sources are essential and accessed multiple times daily</li>
+            </ul>
+
+            <h2>Domestic Horse Nutrition Requirements</h2>
+            
+            <h3>Daily Caloric Needs</h3>
+            <p>A 1,000 lb (454 kg) horse at maintenance (light activity) requires approximately 15,000-20,000 calories per day. Requirements increase significantly with exercise.</p>
+
+            <table class="nutrition-table">
+                <tr>
+                    <th>Activity Level</th>
+                    <th>Caloric Need per 1,000 lbs</th>
+                    <th>Percentage Increase</th>
+                </tr>
+                <tr>
+                    <td>Maintenance (light activity)</td>
+                    <td>15,000-20,000 cal/day</td>
+                    <td>Baseline</td>
+                </tr>
+                <tr>
+                    <td>Light work (1 hour/day)</td>
+                    <td>20,000-25,000 cal/day</td>
+                    <td>+25-33%</td>
+                </tr>
+                <tr>
+                    <td>Moderate work (2-3 hours/day)</td>
+                    <td>25,000-30,000 cal/day</td>
+                    <td>+33-50%</td>
+                </tr>
+                <tr>
+                    <td>Heavy work/competition</td>
+                    <td>30,000-40,000 cal/day</td>
+                    <td>+50-100%</td>
+                </tr>
+                <tr>
+                    <td>Endurance/racing</td>
+                    <td>40,000-60,000 cal/day</td>
+                    <td>+100-200%</td>
+                </tr>
+            </table>
+
+            <h2>Primary Feedstuffs</h2>
+
+            <h3>Hay & Pasture (50-100% of diet)</h3>
+            <ul>
+                <li><strong>Timothy Hay:</strong> Most common, good nutritional balance</li>
+                <li><strong>Alfalfa:</strong> Higher protein and calcium, often mixed with timothy</li>
+                <li><strong>Orchard Grass:</strong> Palatable, nutritious</li>
+                <li><strong>Fresh Pasture:</strong> Ideal when available, requires 1-2 acres minimum per horse</li>
+                <li><strong>Minimum Daily Amount:</strong> 1.5-2% of body weight (15-20 lbs for 1,000 lb horse)</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Quality Matters:</strong>
+                <p>Hay quality is determined by color (bright green is best), aroma (should smell fresh, not musty), and stage of maturity. Poor quality hay should not be used as it lacks nutrients and may cause digestive issues.</p>
+            </div>
+
+            <h3>Grains & Concentrates</h3>
+            <ul>
+                <li><strong>Oats:</strong> Safest grain, easily digestible, traditional choice</li>
+                <li><strong>Barley:</strong> Higher energy, starchier than oats</li>
+                <li><strong>Corn:</strong> High energy but must be carefully balanced</li>
+                <li><strong>Commercial Grain Mixes:</strong> Formulated with proper vitamin/mineral ratios</li>
+                <li><strong>Quantity:</strong> Should not exceed 50% of total feed by weight</li>
+            </ul>
+
+            <h3>Supplements & Treats</h3>
+            <ul>
+                <li>Vegetables (carrots, apples) - good treats in moderation</li>
+                <li>Mineral blocks - provide salt and trace minerals</li>
+                <li>Joint supplements for older horses or those in hard work</li>
+                <li>Probiotics and enzymes - aid digestion</li>
+                <li>Vitamin supplements - sometimes necessary depending on diet</li>
+            </ul>
+
+            <h2>Essential Nutrients</h2>
+
+            <table class="nutrition-table">
+                <tr>
+                    <th>Nutrient</th>
+                    <th>Function</th>
+                    <th>Source</th>
+                </tr>
+                <tr>
+                    <td>Protein</td>
+                    <td>Muscle development and repair</td>
+                    <td>Hay, alfalfa, grains</td>
+                </tr>
+                <tr>
+                    <td>Fiber</td>
+                    <td>Digestive health</td>
+                    <td>Hay, pasture</td>
+                </tr>
+                <tr>
+                    <td>Carbohydrates</td>
+                    <td>Energy</td>
+                    <td>Grains, hay</td>
+                </tr>
+                <tr>
+                    <td>Fats</td>
+                    <td>Energy, coat health</td>
+                    <td>Oils, grains</td>
+                </tr>
+                <tr>
+                    <td>Calcium</td>
+                    <td>Bone health</td>
+                    <td>Alfalfa, supplements</td>
+                </tr>
+                <tr>
+                    <td>Phosphorus</td>
+                    <td>Bone and energy</td>
+                    <td>Grains, hay</td>
+                </tr>
+                <tr>
+                    <td>Magnesium</td>
+                    <td>Muscle function</td>
+                    <td>Hay, supplements</td>
+                </tr>
+                <tr>
+                    <td>Iron</td>
+                    <td>Blood health</td>
+                    <td>Most feeds</td>
+                </tr>
+                <tr>
+                    <td>Zinc</td>
+                    <td>Immune function, hoof health</td>
+                    <td>Supplements, grains</td>
+                </tr>
+                <tr>
+                    <td>Copper</td>
+                    <td>Hair/hoof pigmentation</td>
+                    <td>Supplements, hay</td>
+                </tr>
+            </table>
+
+            <h2>Water Requirements</h2>
+            <p>Water is the most essential nutrient. Horses require:</p>
+            <ul>
+                <li><strong>Maintenance:</strong> 5-10 gallons per day</li>
+                <li><strong>During Exercise:</strong> 10-15+ gallons per day</li>
+                <li><strong>Hot Weather:</strong> 20+ gallons per day</li>
+                <li><strong>Winter:</strong> Heated water encourages drinking</li>
+                <li><strong>Constant Access:</strong> Fresh, clean water should always be available</li>
+            </ul>
+
+            <div class="warning-box">
+                <strong>Important:</strong> Dehydration is serious and can lead to colic, poor performance, and health problems. Never restrict water intake except under veterinary guidance after strenuous exercise.
+            </div>
+
+            <h2>Feeding Best Practices</h2>
+            <ul>
+                <li><strong>Feed Small Portions Frequently:</strong> 3-4 meals daily mimics natural grazing</li>
+                <li><strong>Consistency:</strong> Keep feeding times and amounts consistent</li>
+                <li><strong>Quality Over Quantity:</strong> Feed good quality forage rather than excessive grain</li>
+                <li><strong>Gradual Changes:</strong> Change feed slowly over 2-3 weeks to avoid digestive upset</li>
+                <li><strong>Monitor Weight:</strong> Adjust feed based on body condition score</li>
+                <li><strong>Individual Needs:</strong> Young, old, and hard-working horses have different requirements</li>
+                <li><strong>Avoid Moldy Feed:</strong> Moldy hay or grain can cause serious illness</li>
+            </ul>
+
+            <h2>Special Considerations</h2>
+
+            <h3>Young Horses (Foals & Weanlings)</h3>
+            <ul>
+                <li>Require higher protein and calories for growth</li>
+                <li>Need balanced calcium and phosphorus ratios</li>
+                <li>Should be fed high-quality grain formulated for growth</li>
+                <li>Gradual introduction to solid feed starting at 6-8 weeks</li>
+            </ul>
+
+            <h3>Senior Horses (15+ years)</h3>
+            <ul>
+                <li>Dental problems may require softer feed or soaking</li>
+                <li>May have lower nutrient absorption</li>
+                <li>Often need higher protein and calories despite lower activity</li>
+                <li>More susceptible to nutritional deficiencies</li>
+            </ul>
+
+            <h3>Horses in Hard Work</h3>
+            <ul>
+                <li>Dramatically increased caloric needs</li>
+                <li>Increased electrolyte requirements</li>
+                <li>More frequent, smaller meals essential</li>
+                <li>Timing of meals relative to exercise is important</li>
+            </ul>
+
+            <h2>Common Nutritional Disorders</h2>
+            <ul>
+                <li><strong>Colic:</strong> Often related to poor feeding practices or sudden feed changes</li>
+                <li><strong>Laminitis:</strong> Can be triggered by excessive grain or rich pasture</li>
+                <li><strong>Nutritional Imbalances:</strong> Improper mineral ratios can cause bone and joint problems</li>
+                <li><strong>Developmental Orthopedic Disease:</strong> Young horses overfed with high energy diets</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Consult a Professional:</strong>
+                <p>Work with an equine nutritionist or veterinarian to develop a feeding plan specific to your horse's age, activity level, and health status. Proper nutrition is an investment in your horse's long-term health.</p>
+            </div>
+
+            <div class="sources">
+                <h3>Sources & Further Reading:</h3>
+                <ul>
+                    <li><a href="https://www.aafco.org" target="_blank">📖 American Association of Feed Control Officials</a></li>
+                    <li><a href="https://www.aaha.org" target="_blank">📖 American Animal Hospital Association</a></li>
+                    <li><a href="https://www.equinewelfareresource.org" target="_blank">📖 Equine Welfare Resource - Nutrition</a></li>
+                    <li><a href="https://www.thesprucepets.com" target="_blank">📖 The Spruce Pets - Horse Nutrition</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="information.html"><button class="btn-primary">Back to Information Hub</button></a>
+                <a href="quizzes.html"><button class="btn-secondary">Test Your Knowledge →</button></a>
+            </div>
+        </div>
+    </div>
+
+    <script src="account-utils.js"></script>
+</body>
+</html>

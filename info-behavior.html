@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horse Behavior - H.O.R.S.E News Now</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fdf0e6;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(11, 13, 99, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fdf0e6;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .logo:hover {
+            color: #f08e80;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #fdf0e6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #f08e80;
+            border-bottom-color: #f08e80;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb a {
+            color: #0b0d63;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            color: #f08e80;
+        }
+
+        .breadcrumb span {
+            color: #999;
+            margin: 0 8px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: #fdf0e6;
+            padding: 60px 40px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .content h2 {
+            color: #0b0d63;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 28px;
+            border-bottom: 3px solid #f08e80;
+            padding-bottom: 10px;
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            color: #f08e80;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .content li {
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(240, 142, 128, 0.1) 0%, rgba(26, 29, 127, 0.05) 100%);
+            border-left: 4px solid #f08e80;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .sources {
+            background: #fdf0e6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid #0b0d63;
+        }
+
+        .sources h3 {
+            color: #0b0d63;
+            margin-bottom: 15px;
+        }
+
+        .sources a {
+            color: #0b0d63;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .sources a:hover {
+            color: #f08e80;
+            text-decoration: underline;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .nav-buttons a {
+            flex: 1;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(11, 13, 99, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f08e80;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #e67d6f;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(240, 142, 128, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">H.O.R.S.E</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="information.html">Information</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="information.html">Information Hub</a>
+            <span>/</span>
+            <strong>Horse Behavior</strong>
+        </div>
+
+        <div class="hero">
+            <h1>Horse Behavior & Communication</h1>
+            <p>Understanding how horses think, communicate, and interact</p>
+        </div>
+
+        <div class="content">
+            <h2>Equine Behavior Overview</h2>
+            <p>Horses are highly social animals that have evolved over millions of years to be herd animals. Understanding their natural behavior patterns is crucial for proper care, training, and safety.</p>
+
+            <h2>Herd Structure & Social Hierarchy</h2>
+            <p>In nature, horses live in small family groups called herds, typically consisting of:</p>
+            <ul>
+                <li><strong>Stallion (mare):</strong> The lead female, not the most aggressive</li>
+                <li><strong>Breeding Stallion:</strong> Protects the herd</li>
+                <li><strong>Foals and Juveniles:</strong> Learn from adults</li>
+                <li><strong>Bachelor Bands:</strong> Young males before reproductive maturity</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Fact:</strong>
+                <p>Contrary to popular belief, horses don't have an "alpha" stallion that rules through aggression. Instead, they have natural leaders and establish peaceful hierarchies based on experience and personality.</p>
+            </div>
+
+            <h2>Communication Methods</h2>
+            
+            <h3>Vocalizations</h3>
+            <ul>
+                <li><strong>Neigh:</strong> Long-distance greeting and call</li>
+                <li><strong>Whinny:</strong> High-pitched contact call</li>
+                <li><strong>Nicker:</strong> Soft, low frequency sound for close communication</li>
+                <li><strong>Snort:</strong> Alarm signal or expression of curiosity</li>
+                <li><strong>Squeal:</strong> Warning or aggression signal</li>
+                <li><strong>Groan:</strong> Sign of pain or discomfort</li>
+            </ul>
+
+            <h3>Body Language</h3>
+            <ul>
+                <li><strong>Ears:</strong> Forward (alert), backward (relaxed or warning), pinned back (aggressive)</li>
+                <li><strong>Tail:</strong> High (alert/excited), low (relaxed), swishing (irritation/flies)</li>
+                <li><strong>Nostrils:</strong> Flared (excitement/fear), tight (relaxation)</li>
+                <li><strong>Eyes:</strong> Wide (fear), soft (calm), showing whites (alarm)</li>
+                <li><strong>Posture:</strong> Weight distribution indicates mood and attention</li>
+            </ul>
+
+            <h3>Tactile Communication</h3>
+            <ul>
+                <li>Grooming and scratching each other reinforces bonds</li>
+                <li>Nuzzling shows affection and trust</li>
+                <li>Leaning on another horse indicates comfort and safety</li>
+            </ul>
+
+            <h2>Behavior Patterns</h2>
+            
+            <h3>Grazing & Feeding</h3>
+            <p>Horses are natural grazers designed to eat for 16-18 hours per day. They have a strong preference for fresh grass and will spend significant time foraging. This is why constant access to hay is important in domestication.</p>
+
+            <h3>Sleep</h3>
+            <p>Horses are unique in that they can sleep both lying down and standing up. They typically sleep 2-3 hours per day, often in short 15-30 minute intervals. Deep sleep (REM sleep) usually occurs lying down and lasts only 20-30 minutes per day.</p>
+
+            <h3>Play & Exercise</h3>
+            <p>Young horses are naturally playful and engage in games with other foals. Adult horses also play, which is a sign of good health and contentment. Play behavior includes running, bucking, rearing, and mock fights.</p>
+
+            <h2>Fear & Flight Response</h2>
+            <p>Horses are prey animals in nature, so fear and a strong flight response are hardwired into their biology. Key characteristics:</p>
+            <ul>
+                <li>Extreme sensitivity to sudden movements and sounds</li>
+                <li>Instinct to flee when threatened</li>
+                <li>Excellent peripheral vision to detect predators</li>
+                <li>Can reach top speed (35-55 mph) in seconds</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Understanding Fear:</strong>
+                <p>A horse's fear response is not about being brave or cowardly—it's survival instinct. Gradual desensitization and positive reinforcement work far better than punishment for building confidence.</p>
+            </div>
+
+            <h2>Territorial Behavior</h2>
+            <p>Horses establish and defend territories, especially during breeding season. Stallions mark territory with dung piles and urine, while mares are less territorial but still protective of foals and grazing areas.</p>
+
+            <h2>Bonding & Relationships</h2>
+            <p>Horses form strong bonds with:</p>
+            <ul>
+                <li><strong>Other horses:</strong> Close companions for life, especially same-sex friendships</li>
+                <li><strong>Humans:</strong> Can develop deep trust relationships with individual handlers</li>
+                <li><strong>Other animals:</strong> May bond with ponies, donkeys, goats, or other species</li>
+            </ul>
+
+            <h2>Problem Behaviors</h2>
+            <p>Common behavioral issues usually stem from lack of exercise, social isolation, or pain:</p>
+            <ul>
+                <li><strong>Stereotypies:</strong> Cribbing, weaving, stall walking (often stress-related)</li>
+                <li><strong>Aggression:</strong> Usually fear-based or territorial</li>
+                <li><strong>Bolting/Bucking:</strong> Often indicates fear, pain, or excitement</li>
+                <li><strong>Nipping:</strong> Can be playful or aggressive depending on context</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Important:</strong>
+                <p>Always rule out pain or medical issues before assuming behavioral problems are training or attitude related. A veterinary evaluation should be the first step.</p>
+            </div>
+
+            <h2>Natural Instincts in Training</h2>
+            <p>Successful horse training works with natural instincts rather than against them:</p>
+            <ul>
+                <li>Use positive reinforcement to encourage desired behaviors</li>
+                <li>Understand fear responses and build confidence gradually</li>
+                <li>Recognize that horses are prey animals and design training accordingly</li>
+                <li>Use consistent, clear communication</li>
+            </ul>
+
+            <div class="sources">
+                <h3>Sources & Further Reading:</h3>
+                <ul>
+                    <li><a href="https://www.equinewelfareresource.org" target="_blank">📖 Equine Welfare Resource - Behavior</a></li>
+                    <li><a href="https://www.britannica.com/animal/horse" target="_blank">📖 Britannica - Horse Behavior</a></li>
+                    <li><a href="https://www.aaha.org" target="_blank">📖 American Animal Hospital Association</a></li>
+                    <li><a href="https://journals.plos.org" target="_blank">📖 PLOS - Equine Behavior Research</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="information.html"><button class="btn-primary">Back to Information Hub</button></a>
+                <a href="info-breeds.html"><button class="btn-secondary">Next: Breeds →</button></a>
+            </div>
+        </div>
+    </div>
+
+    <script src="account-utils.js"></script>
+</body>
+</html>

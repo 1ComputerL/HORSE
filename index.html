@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H.O.R.S.E News Now - Equine Knowledge Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fdf0e6;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(11, 13, 99, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fdf0e6;
+            text-decoration: none;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo:hover {
+            color: #f08e80;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fdf0e6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #f08e80;
+            border-bottom-color: #f08e80;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: #fdf0e6;
+            padding: 80px 20px;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            max-width: 700px;
+            opacity: 0.95;
+        }
+
+        .hero-btn {
+            background: linear-gradient(135deg, #f08e80 0%, #f4aba1 100%);
+            color: white;
+            padding: 15px 40px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(240, 142, 128, 0.4);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Featured Section */
+        .featured-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .featured-section h2 {
+            font-size: 36px;
+            color: #0b0d63;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .featured-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #f08e80, #f4aba1);
+            border-radius: 2px;
+        }
+
+        .featured-section p {
+            font-size: 18px;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* Quiz Grid */
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .quiz-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(11, 13, 99, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .quiz-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(240, 142, 128, 0.2);
+        }
+
+        .quiz-card-header {
+            background: linear-gradient(135deg, #f08e80 0%, #f4aba1 100%);
+            padding: 30px 20px;
+            color: white;
+            text-align: center;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .quiz-card-header h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .quiz-card-body {
+            padding: 25px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .quiz-card-body p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .quiz-card-btn {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+            align-self: flex-start;
+        }
+
+        .quiz-card-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Info Section */
+        .info-section {
+            background: white;
+            padding: 50px 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(11, 13, 99, 0.1);
+        }
+
+        .info-section h2 {
+            color: #0b0d63;
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .info-item h3 {
+            color: #f08e80;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .info-item p {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: #fdf0e6;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: #f08e80;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #fdf0e6;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 15px;
+                font-size: 14px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .featured-section h2 {
+                font-size: 28px;
+            }
+
+            .quiz-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">H.O.R.S.E</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="information.html">Information</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div id="auth-status" style="display: flex; align-items: center; gap: 15px; margin-left: auto;"></div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Welcome to H.O.R.S.E News Now</h1>
+        <p>Your ultimate equine knowledge hub with fascinating facts, educational quizzes, and the latest horse news</p>
+        <a href="quizzes.html" class="hero-btn">Start Exploring Quizzes</a>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Featured Section -->
+        <section class="featured-section">
+            <h2>Discover Horse Knowledge</h2>
+            <p>Test your equine expertise with our comprehensive collection of specialized quizzes covering everything from horse breeds to sports to wild horses.</p>
+        </section>
+
+        <!-- Preview Cards -->
+        <section class="quiz-grid">
+            <a href="quiz-1-general.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <h3>General Facts</h3>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Test your knowledge of basic horse facts, anatomy, and characteristics.</p>
+                    <button class="quiz-card-btn">Take Quiz</button>
+                </div>
+            </a>
+
+            <a href="quiz-2-breeds.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <h3>Horse Breeds</h3>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Explore different horse breeds from around the world.</p>
+                    <button class="quiz-card-btn">Take Quiz</button>
+                </div>
+            </a>
+
+            <a href="quiz-3-history.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <h3>History & Legends</h3>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Learn about famous horses in history, mythology, and pop culture.</p>
+                    <button class="quiz-card-btn">Take Quiz</button>
+                </div>
+            </a>
+
+            <a href="quiz-4-behavior.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <h3>Behavior</h3>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Understand horse communication, herd dynamics, and behavior patterns.</p>
+                    <button class="quiz-card-btn">Take Quiz</button>
+                </div>
+            </a>
+
+            <a href="quiz-5-anatomy.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <h3>Anatomy</h3>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Dive deep into equine physiology and body systems.</p>
+                    <button class="quiz-card-btn">Take Quiz</button>
+                </div>
+            </a>
+
+            <a href="quiz-8-sports.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <h3>Equestrian Sports</h3>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Test your knowledge of racing, dressage, jumping, and more.</p>
+                    <button class="quiz-card-btn">Take Quiz</button>
+                </div>
+            </a>
+        </section>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2>Why Learn About Horses?</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>Fascinating Creatures</h3>
+                    <p>Horses have captivated humans for thousands of years. Learn what makes them truly extraordinary.</p>
+                </div>
+                <div class="info-item">
+                    <h3>Rich History</h3>
+                    <p>From ancient civilizations to modern times, horses have played crucial roles in human development.</p>
+                </div>
+                <div class="info-item">
+                    <h3>Diverse Species</h3>
+                    <p>Explore the amazing variety of horse breeds, each with unique characteristics and abilities.</p>
+                </div>
+                <div class="info-item">
+                    <h3>Sports & Recreation</h3>
+                    <p>Discover the thrilling world of equestrian sports and therapeutic horse activities.</p>
+                </div>
+                <div class="info-item">
+                    <h3>Conservation</h3>
+                    <p>Learn about wild horse populations and conservation efforts around the globe.</p>
+                </div>
+                <div class="info-item">
+                    <h3>Care & Training</h3>
+                    <p>Understand what it takes to properly care for and train these magnificent animals.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="featured-section" style="margin-bottom: 40px;">
+            <h2 style="margin-bottom: 30px;">Ready for More?</h2>
+            <p>Check out our complete quiz collection with 11 specialized quizzes covering every aspect of equine knowledge.</p>
+            <a href="quizzes.html" class="hero-btn">Explore All Quizzes</a>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 H.O.R.S.E News Now. All rights reserved.</p>
+        <p>Helping Obsessions Related to the Species of Equines - An equine knowledge and quiz platform dedicated to horse enthusiasts everywhere.</p>
+    </footer>
+    <script src="account-utils.js"></script>
+</body>
+</html>

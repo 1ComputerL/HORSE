@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horse History - H.O.R.S.E News Now</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fdf0e6;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(11, 13, 99, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fdf0e6;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .logo:hover {
+            color: #f08e80;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #fdf0e6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #f08e80;
+            border-bottom-color: #f08e80;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb a {
+            color: #0b0d63;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            color: #f08e80;
+        }
+
+        .breadcrumb span {
+            color: #999;
+            margin: 0 8px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: #fdf0e6;
+            padding: 60px 40px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .content h2 {
+            color: #0b0d63;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 28px;
+            border-bottom: 3px solid #f08e80;
+            padding-bottom: 10px;
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            color: #f08e80;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .content li {
+            margin-bottom: 8px;
+        }
+
+        .timeline {
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .timeline-event {
+            background: #fdf0e6;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #f08e80;
+        }
+
+        .timeline-event h4 {
+            color: #0b0d63;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .timeline-event .date {
+            color: #f08e80;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(240, 142, 128, 0.1) 0%, rgba(26, 29, 127, 0.05) 100%);
+            border-left: 4px solid #f08e80;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .sources {
+            background: #fdf0e6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid #0b0d63;
+        }
+
+        .sources h3 {
+            color: #0b0d63;
+            margin-bottom: 15px;
+        }
+
+        .sources a {
+            color: #0b0d63;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .sources a:hover {
+            color: #f08e80;
+            text-decoration: underline;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .nav-buttons a {
+            flex: 1;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(11, 13, 99, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f08e80;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #e67d6f;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(240, 142, 128, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">H.O.R.S.E</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="information.html">Information</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="information.html">Information Hub</a>
+            <span>/</span>
+            <strong>Horse History</strong>
+        </div>
+
+        <div class="hero">
+            <h1>Horse History</h1>
+            <p>Exploring the fascinating journey of horses through human civilization</p>
+        </div>
+
+        <div class="content">
+            <h2>The Evolution of the Horse</h2>
+            <p>Horses have an incredible evolutionary history spanning over 50 million years. The modern horse (Equus ferus caballus) evolved from small, multi-toed ancestors into the single-hoofed animals we know today.</p>
+
+            <h3>Evolutionary Timeline</h3>
+            <ul>
+                <li><strong>Eocene Epoch (55-34 mya):</strong> Eohippus, the first ancestor, was dog-sized with multiple toes</li>
+                <li><strong>Oligocene Epoch (34-23 mya):</strong> Mesohippus evolved with reduced toes</li>
+                <li><strong>Miocene Epoch (23-5 mya):</strong> Merychippus appeared with enhanced grazing abilities</li>
+                <li><strong>Pliocene Epoch (5-2 mya):</strong> Pliohippus developed the single hoof</li>
+                <li><strong>Pleistocene Epoch (2.6 mya-11,700 years ago):</strong> Equus emerged as the modern horse genus</li>
+            </ul>
+
+            <h2>Domestication History</h2>
+            
+            <div class="timeline-event">
+                <span class="date">4000-3500 BCE</span>
+                <h4>First Domestication</h4>
+                <p>Horses were first domesticated by the Botai culture of Kazakhstan. Initially used for meat and milk, they later became invaluable for transportation and warfare.</p>
+            </div>
+
+            <div class="timeline-event">
+                <span class="date">2000 BCE</span>
+                <h4>Chariot Era</h4>
+                <p>Horses and chariots became central to warfare and prestige in the Middle East, Egypt, and China. Ancient chariotry dominated battlefields for centuries.</p>
+            </div>
+
+            <div class="timeline-event">
+                <span class="date">1500 BCE</span>
+                <h4>Horsemanship Develops</h4>
+                <p>The Hittites develop techniques for riding horses rather than just driving them in chariots. Horseback riding becomes militarily significant.</p>
+            </div>
+
+            <div class="timeline-event">
+                <span class="date">Medieval Period (500-1500 CE)</span>
+                <h4>Knights and Cavalry</h4>
+                <p>Heavier horse breeds are developed for carrying armored knights. Horses become central to feudal societies and warfare. The stirrup's invention transforms cavalry tactics.</p>
+            </div>
+
+            <div class="timeline-event">
+                <span class="date">1493</span>
+                <h4>Horses to the Americas</h4>
+                <p>Columbus brings horses to the Americas. They transform Native American cultures on the Great Plains, where they were previously extinct.</p>
+            </div>
+
+            <div class="timeline-event">
+                <span class="date">1600s-1800s</span>
+                <h4>Age of Exploration & Settlement</h4>
+                <p>Horses become essential for exploration, settlement, and commerce. Selective breeding creates specialized breeds for different purposes.</p>
+            </div>
+
+            <div class="timeline-event">
+                <span class="date">1800s</span>
+                <h4>Modern Breed Development</h4>
+                <p>Modern horse breeds are established through selective breeding. Thoroughbred racing begins in England and becomes a global phenomenon.</p>
+            </div>
+
+            <div class="timeline-event">
+                <span class="date">1900s</span>
+                <h4>Transition from Work to Sport</h4>
+                <p>As mechanization increases, horses transition from work animals to sport and leisure animals. Modern equestrian sports develop.</p>
+            </div>
+
+            <h2>Horses in Warfare</h2>
+            <p>Horses played a pivotal role in human military history:</p>
+            <ul>
+                <li><strong>Ancient Warfare:</strong> Chariots and mounted archers dominated ancient battlefields</li>
+                <li><strong>Medieval Era:</strong> Armored cavalry formed the backbone of European military forces</li>
+                <li><strong>Napoleonic Wars:</strong> Cavalry charges remained central to military tactics</li>
+                <li><strong>American Civil War:</strong> Both cavalry and artillery horses were vital</li>
+                <li><strong>WWI & WWII:</strong> Despite mechanization, horses remained important in many theaters</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Interesting Fact:</strong>
+                <p>In WWI, an estimated 2 million horses died during the conflict. Horses served not just as mounts but also as transport for supplies, artillery, and wounded soldiers.</p>
+            </div>
+
+            <h2>Cultural Significance</h2>
+            <p>Horses have held cultural importance across civilizations:</p>
+            <ul>
+                <li><strong>Native Americans:</strong> The horse transformed Great Plains cultures after its introduction from Spanish conquistadors</li>
+                <li><strong>Mongolian Empire:</strong> Genghis Khan's mounted warriors conquered the largest contiguous land empire</li>
+                <li><strong>Arab Culture:</strong> Arabian horses hold special significance and are featured in poetry and art</li>
+                <li><strong>European Nobility:</strong> Horses were symbols of wealth, power, and status</li>
+                <li><strong>American West:</strong> Cowboys and ranch horses shaped the frontier</li>
+            </ul>
+
+            <h2>Famous Historical Horses</h2>
+
+            <h3>Alexander the Great's Bucephalus</h3>
+            <p>One of history's most famous horses, Bucephalus carried Alexander the Great through countless battles including the Battle of Gaugamela. The horse was said to be unrideable until young Alexander recognized it feared its own shadow and turned it into the sun.</p>
+
+            <h3>Napoleon's Marengo</h3>
+            <p>This Arabian horse carried Napoleon through multiple victories and two exiles. Marengo became legendary for surviving the Battle of Waterloo and living to age 38.</p>
+
+            <h3>Comanche - The Last Survivor</h3>
+            <p>This horse survived Custer's Last Stand in 1876 and became a symbol of cavalry tradition. Comanche's skeleton is displayed at the University of Kansas.</p>
+
+            <h3>Secretariat</h3>
+            <p>One of the greatest racehorses ever, Secretariat won the Triple Crown in 1973 with a record Belmont Stakes time that stood for 39 years.</p>
+
+            <h2>Modern Horse Industry</h2>
+            <p>Today, horses are primarily used for:</p>
+            <ul>
+                <li><strong>Sport:</strong> Racing, show jumping, dressage, eventing</li>
+                <li><strong>Leisure:</strong> Pleasure riding, trail riding, ranch work</li>
+                <li><strong>Therapy:</strong> Equine-assisted therapy for physical and mental health</li>
+                <li><strong>Heritage:</strong> Preservation of traditions and historical reenactments</li>
+                <li><strong>Conservation:</strong> Management of wild horse populations</li>
+            </ul>
+
+            <h2>Horses Today</h2>
+            <p>Despite mechanization, horses remain important in modern society:</p>
+            <ul>
+                <li>Approximately 60 million horses exist worldwide</li>
+                <li>The global equestrian industry generates billions of dollars annually</li>
+                <li>Equestrian sports are part of the Olympic Games</li>
+                <li>Horses continue to play cultural roles in many societies</li>
+                <li>Wild horses and conservation efforts remain important</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Did You Know?</strong>
+                <p>Horses have been depicted in human art and culture for over 30,000 years, appearing in some of the oldest known cave paintings. Their significance to humanity spans virtually all of recorded history.</p>
+            </div>
+
+            <div class="sources">
+                <h3>Sources & Further Reading:</h3>
+                <ul>
+                    <li><a href="https://www.britannica.com/animal/horse" target="_blank">📖 Britannica - Horse History</a></li>
+                    <li><a href="https://www.nationalgeographic.com" target="_blank">📖 National Geographic - Horse Evolution</a></li>
+                    <li><a href="https://www.smithsonianmag.com" target="_blank">📖 Smithsonian Magazine - Horse History</a></li>
+                    <li><a href="https://www.equinewelfareresource.org" target="_blank">📖 Equine Welfare Resource</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="information.html"><button class="btn-primary">Back to Information Hub</button></a>
+                <a href="info-nutrition.html"><button class="btn-secondary">Next: Nutrition →</button></a>
+            </div>
+        </div>
+    </div>
+
+    <script src="account-utils.js"></script>
+</body>
+</html>

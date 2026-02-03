@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Quizzes - H.O.R.S.E News Now</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fdf0e6;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(11, 13, 99, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fdf0e6;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .logo:hover {
+            color: #f08e80;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fdf0e6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #f08e80;
+            border-bottom-color: #f08e80;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: #fdf0e6;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.95;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Quiz Grid */
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .quiz-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(11, 13, 99, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .quiz-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(240, 142, 128, 0.2);
+        }
+
+        .quiz-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(11, 13, 99, 0.9);
+            color: #f08e80;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .quiz-card-header {
+            background: linear-gradient(135deg, #f08e80 0%, #f4aba1 100%);
+            padding: 40px 20px 30px;
+            color: white;
+            text-align: center;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .quiz-card-header h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .quiz-card-header .question-count {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .quiz-card-body {
+            padding: 25px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .quiz-card-body p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .quiz-card-btn {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+            align-self: flex-start;
+        }
+
+        .quiz-card-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: #fdf0e6;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: #f08e80;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #fdf0e6;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 15px;
+                font-size: 14px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .quiz-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">H.O.R.S.E</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="quizzes.html" class="active">Quizzes</a></li>
+                <li><a href="information.html">Information</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div id="auth-status" style="display: flex; align-items: center; gap: 15px; margin-left: auto;"></div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>All Horse Quizzes</h1>
+        <p>11 comprehensive quizzes with 110 questions covering every aspect of equine knowledge</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="quiz-grid">
+            <a href="quiz-1-general.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <div class="quiz-number">1</div>
+                    <h2>General Facts</h2>
+                    <div class="question-count">10 Questions</div>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Test your knowledge on basic horse facts, anatomy, speed, lifespan, and other general characteristics that define these magnificent creatures.</p>
+                    <button class="quiz-card-btn">Start Quiz</button>
+                </div>
+            </a>
+
+            <a href="quiz-2-breeds.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <div class="quiz-number">2</div>
+                    <h2>Horse Breeds</h2>
+                    <div class="question-count">10 Questions</div>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Explore the diverse world of horse breeds from around the globe, their origins, physical characteristics, and specific uses.</p>
+                    <button class="quiz-card-btn">Start Quiz</button>
+                </div>
+            </a>
+
+            <a href="quiz-3-history.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <div class="quiz-number">3</div>
+                    <h2>History & Legends</h2>
+                    <div class="question-count">10 Questions</div>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Discover famous horses throughout history, legendary tales from mythology, and iconic equines in pop culture and literature.</p>
+                    <button class="quiz-card-btn">Start Quiz</button>
+                </div>
+            </a>
+
+            <a href="quiz-4-behavior.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <div class="quiz-number">4</div>
+                    <h2>Behavior</h2>
+                    <div class="question-count">10 Questions</div>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Learn about horse communication, herd dynamics, behavioral signals, and how horses interact with their environment.</p>
+                    <button class="quiz-card-btn">Start Quiz</button>
+                </div>
+            </a>
+
+            <a href="quiz-5-anatomy.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <div class="quiz-number">5</div>
+                    <h2>Anatomy</h2>
+                    <div class="question-count">10 Questions</div>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Dive deep into equine physiology, skeletal structure, organ systems, and the biological features that make horses unique.</p>
+                    <button class="quiz-card-btn">Start Quiz</button>
+                </div>
+            </a>
+
+            <a href="quiz-6-famous-horses.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <div class="quiz-number">6</div>
+                    <h2>Famous Horses</h2>
+                    <div class="question-count">10 Questions</div>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Test your knowledge of iconic horses from movies, literature, sports history, and real-world achievements.</p>
+                    <button class="quiz-card-btn">Start Quiz</button>
+                </div>
+            </a>
+
+            <a href="quiz-7-care-training.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <div class="quiz-number">7</div>
+                    <h2>Care & Training</h2>
+                    <div class="question-count">10 Questions</div>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Learn about proper horse care, training techniques, health maintenance, and equestrian best practices.</p>
+                    <button class="quiz-card-btn">Start Quiz</button>
+                </div>
+            </a>
+
+            <a href="quiz-8-sports.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <div class="quiz-number">8</div>
+                    <h2>Sports</h2>
+                    <div class="question-count">10 Questions</div>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Explore equestrian sports including racing, dressage, jumping, polo, rodeo, and other competitive events.</p>
+                    <button class="quiz-card-btn">Start Quiz</button>
+                </div>
+            </a>
+
+            <a href="quiz-9-nutrition.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <div class="quiz-number">9</div>
+                    <h2>Nutrition</h2>
+                    <div class="question-count">10 Questions</div>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Understand horse nutrition, dietary requirements, feeding practices, and nutritional health for different life stages.</p>
+                    <button class="quiz-card-btn">Start Quiz</button>
+                </div>
+            </a>
+
+            <a href="quiz-10-reproduction.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <div class="quiz-number">10</div>
+                    <h2>Reproduction</h2>
+                    <div class="question-count">10 Questions</div>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Learn about horse breeding, gestation, foals, life stages, and the reproductive systems of equines.</p>
+                    <button class="quiz-card-btn">Start Quiz</button>
+                </div>
+            </a>
+
+            <a href="quiz-11-wild-horses.html" class="quiz-card">
+                <div class="quiz-card-header">
+                    <div class="quiz-number">11</div>
+                    <h2>Wild Horses</h2>
+                    <div class="question-count">10 Questions</div>
+                </div>
+                <div class="quiz-card-body">
+                    <p>Discover wild horse populations, conservation efforts, endangered breeds, and the preservation of wild equines worldwide.</p>
+                    <button class="quiz-card-btn">Start Quiz</button>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 H.O.R.S.E News Now. All rights reserved.</p>
+        <p>Helping Obsessions Related to the Species of Equines - Browse our complete collection of equine quizzes.</p>
+    </footer>
+    <script src="account-utils.js"></script>
+</body>
+</html>

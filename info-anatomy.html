@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horse Anatomy - H.O.R.S.E News Now</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fdf0e6;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(11, 13, 99, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fdf0e6;
+            text-decoration: none;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo:hover {
+            color: #f08e80;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fdf0e6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #f08e80;
+            border-bottom-color: #f08e80;
+        }
+
+        #auth-status {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Page Content */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb a {
+            color: #0b0d63;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            color: #f08e80;
+        }
+
+        .breadcrumb span {
+            color: #999;
+            margin: 0 8px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: #fdf0e6;
+            padding: 60px 40px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: 0.95;
+        }
+
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .content h2 {
+            color: #0b0d63;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 28px;
+            border-bottom: 3px solid #f08e80;
+            padding-bottom: 10px;
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            color: #f08e80;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .content ul, .content ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .content li {
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+
+        .content strong {
+            color: #0b0d63;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(240, 142, 128, 0.1) 0%, rgba(26, 29, 127, 0.05) 100%);
+            border-left: 4px solid #f08e80;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .info-box strong {
+            display: block;
+            color: #f08e80;
+            margin-bottom: 8px;
+        }
+
+        .sources {
+            background: #fdf0e6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid #0b0d63;
+        }
+
+        .sources h3 {
+            color: #0b0d63;
+            margin-bottom: 15px;
+        }
+
+        .sources ul {
+            list-style: none;
+            margin: 0;
+        }
+
+        .sources li {
+            margin-bottom: 10px;
+        }
+
+        .sources a {
+            color: #0b0d63;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .sources a:hover {
+            color: #f08e80;
+            text-decoration: underline;
+        }
+
+        .sources-icon {
+            margin-right: 8px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .nav-buttons a {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0b0d63 0%, #1a1d7f 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(11, 13, 99, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f08e80;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #e67d6f;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(240, 142, 128, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .nav-links {
+                gap: 15px;
+                font-size: 14px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .nav-buttons a {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">H.O.R.S.E</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="information.html">Information</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div id="auth-status"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="information.html">Information Hub</a>
+            <span>/</span>
+            <strong>Horse Anatomy</strong>
+        </div>
+
+        <div class="hero">
+            <h1>Horse Anatomy</h1>
+            <p>Understanding the biological structure that makes horses remarkable athletes</p>
+        </div>
+
+        <div class="content">
+            <h2>Introduction to Horse Anatomy</h2>
+            <p>Horses are magnificent creatures with complex biological systems perfectly adapted for running, jumping, and endurance. Understanding their anatomy helps us appreciate their abilities and care for them properly.</p>
+
+            <h2>Skeletal Structure</h2>
+            <p>A horse skeleton contains approximately <strong>205 bones</strong> that provide support and protection for the body. Key skeletal features include:</p>
+            <ul>
+                <li><strong>Vertebral Column:</strong> 54 vertebrae (7 cervical, 18 thoracic, 6 lumbar, 5 sacral, and 15-20 coccygeal)</li>
+                <li><strong>Ribs:</strong> 18 pairs protect vital organs</li>
+                <li><strong>Limb Bones:</strong> Highly specialized for weight-bearing and movement</li>
+                <li><strong>Skull:</strong> Houses the brain and supports the teeth</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Did You Know?</strong>
+                <p>Horses have a hyoid bone in their throat that is unique among mammals. This bone allows horses to breathe more efficiently through their nostrils.</p>
+            </div>
+
+            <h2>Muscular System</h2>
+            <p>Horses have approximately <strong>700 muscles</strong> working together to create movement and maintain posture. Major muscle groups include:</p>
+            <h3>Primary Muscle Groups:</h3>
+            <ul>
+                <li><strong>Neck Muscles:</strong> Allow flexibility and movement of the head</li>
+                <li><strong>Back Muscles:</strong> Support the spine and rider weight</li>
+                <li><strong>Hindquarter Muscles:</strong> Provide powerful propulsion</li>
+                <li><strong>Chest Muscles:</strong> Essential for movement and breathing</li>
+                <li><strong>Shoulder Muscles:</strong> Enable forward stride and collection</li>
+            </ul>
+
+            <h2>The Hoof</h2>
+            <p>The horse's hoof is a remarkable adaptation for running and jumping. It's not just bone but a complex structure consisting of:</p>
+            <ul>
+                <li><strong>Wall:</strong> The hard outer covering that bears weight</li>
+                <li><strong>Sole:</strong> Provides shock absorption and traction</li>
+                <li><strong>Frog:</strong> Triangular pad that absorbs impact and improves blood circulation</li>
+                <li><strong>Coronary Band:</strong> Produces new hoof tissue</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Interesting Fact:</strong>
+                <p>The frog of a horse's hoof acts like a second heart! When the hoof impacts the ground, the frog compresses and helps pump blood back up the leg.</p>
+            </div>
+
+            <h2>Cardiovascular System</h2>
+            <p>A horse's heart is a powerful organ weighing 8-10 pounds (3.6-4.5 kg) and beating 30-40 times per minute at rest. Key features:</p>
+            <ul>
+                <li>Four-chambered heart with four chambers</li>
+                <li>Circulates approximately 75 liters of blood through the body</li>
+                <li>Elevated heart rate during exercise (can reach 200+ bpm)</li>
+                <li>Highly efficient oxygen transport system</li>
+            </ul>
+
+            <h2>Respiratory System</h2>
+            <p>Horses are obligate nasal breathers, meaning they breathe only through their nostrils. Their respiratory system is designed for:</p>
+            <ul>
+                <li><strong>Efficient oxygen intake:</strong> Large lungs with high capacity</li>
+                <li><strong>Direct airflow:</strong> Cannot breathe through the mouth</li>
+                <li><strong>Air filtration:</strong> Nasal hairs filter dust and particles</li>
+                <li><strong>Gas exchange:</strong> Approximately 100,000 liters of air pass through lungs daily in an active horse</li>
+            </ul>
+
+            <h2>Sensory Organs</h2>
+            <h3>Vision</h3>
+            <p>Horses have excellent vision with a <strong>350-degree field of view</strong>, though they have a blind spot directly behind and in front of them. Their eyes are adapted for:</p>
+            <ul>
+                <li>Detecting movement quickly</li>
+                <li>Excellent night vision</li>
+                <li>Detecting threats in dim lighting</li>
+            </ul>
+
+            <h3>Hearing</h3>
+            <p>Horses can hear frequencies up to <strong>33,000 Hz</strong> (compared to humans at 20,000 Hz). Their ears can rotate 180 degrees independently to locate sounds.</p>
+
+            <h3>Taste and Smell</h3>
+            <p>Horses have a highly developed sense of smell and taste, used to identify plants, detect water, and recognize other horses and humans.</p>
+
+            <h2>Digestive System</h2>
+            <p>The equine digestive system is designed for continuous grazing:</p>
+            <ul>
+                <li><strong>Stomach:</strong> Relatively small (holds 2-4 gallons), designed for continuous feeding</li>
+                <li><strong>Small Intestine:</strong> Up to 70 feet long, primary site of nutrient absorption</li>
+                <li><strong>Large Intestine:</strong> 20-25 feet long, crucial for water absorption and fiber fermentation</li>
+                <li><strong>Cecum:</strong> Large fermentation chamber for fiber digestion</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Important:</strong>
+                <p>Horses are herbivores designed to eat constantly throughout the day. They have a relatively weak stomach acid and can only vomit under extreme duress.</p>
+            </div>
+
+            <h2>Teeth and Jaws</h2>
+            <p>Horses have powerful jaws and specialized teeth:</p>
+            <ul>
+                <li><strong>Incisors:</strong> 12 front teeth for cutting grass</li>
+                <li><strong>Canines:</strong> 4 teeth (mainly in males)</li>
+                <li><strong>Premolars and Molars:</strong> 24 grinding teeth</li>
+                <li><strong>Continuous Growth:</strong> Teeth grow throughout life to compensate for wear</li>
+            </ul>
+
+            <h2>Nervous System</h2>
+            <p>Horses have a well-developed nervous system with:</p>
+            <ul>
+                <li>Large, complex brain capable of learning and memory</li>
+                <li>Highly sensitive to touch and pressure</li>
+                <li>Excellent proprioception (body awareness)</li>
+                <li>Quick reflexes for survival</li>
+            </ul>
+
+            <div class="sources">
+                <h3>Sources & Further Reading:</h3>
+                <ul>
+                    <li><a href="https://www.britannica.com/animal/horse" target="_blank"><span class="sources-icon">📖</span>Britannica - Horse Anatomy</a></li>
+                    <li><a href="https://www.aafco.org" target="_blank"><span class="sources-icon">📖</span>American Association of Feed Control Officials</a></li>
+                    <li><a href="https://www.equinewelfareresource.org" target="_blank"><span class="sources-icon">📖</span>Equine Welfare Resource</a></li>
+                    <li><a href="https://www.thesprucepets.com" target="_blank"><span class="sources-icon">📖</span>The Spruce Pets - Horse Care Guides</a></li>
+                    <li><a href="https://www.aaha.org" target="_blank"><span class="sources-icon">📖</span>American Animal Hospital Association</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="information.html"><button class="btn-primary">Back to Information Hub</button></a>
+                <a href="info-behavior.html"><button class="btn-secondary">Next: Behavior →</button></a>
+            </div>
+        </div>
+    </div>
+
+    <script src="account-utils.js"></script>
+</body>
+</html>
